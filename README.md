@@ -51,15 +51,12 @@
 
 <br>
 
-| Kategori             | Item Produk                | Varian / Catatan                   |
-| -------------------- | -------------------------- | ---------------------------------- |
-| 🍗 **Ayam & Paket**  | Paket Ayam Geprek Ayamo    | Level Pedas 1–5, Pilihan Sambal    |
-| 🍗 **Ayam & Paket**  | Paket Ayam Crispy Original | Saus Keju / BBQ / Saus Pedas Manis |
-| 🍗 **Ayam & Paket**  | Paket Ayam Bakar Madu      | Nasi + Lalapan + Sambal Terasi     |
-| 🍟 **Sides & Snack** | Kulit Ayam Krispi          | Original / Balado / Spicy          |
-| 🍟 **Sides & Snack** | Tahu & Tempe Geprek        | Pilihan Sambal Bawang / Ijo        |
-| 🍹 **Minuman**       | Es Teh Manis / Lemon Tea   | Regular / Jumbo                    |
-| 🍹 **Minuman**       | Aneka Jus Buah Segar       | Mangga, Alpukat, Jeruk             |
+| Kategori             | Item Produk                |
+| -------------------- | -------------------------- |
+|         ayam         | bagian dada,sayap          |
+                       | paha atas,paha bawah       | 
+                       | hati,kepala,ceker,leher    |
+|         bakso        |
 
 </details>
 
