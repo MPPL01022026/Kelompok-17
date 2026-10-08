@@ -1,0 +1,33 @@
+services:
+  app:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    container_name: ayamo-app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../app:/var/www/html
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.3
+    container_name: ayamo-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: ayamo
+    volumes:
+      - ayamo-mysql:/var/lib/mysql
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: ayamo-cloudflared
+    ports:
+      - "2443:2443"
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARED_TUNNEL_TOKEN}
+
+volumes:
+  ayamo-mysql:
