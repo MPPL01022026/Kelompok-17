@@ -133,7 +133,7 @@ Untuk menjaga transparansi tugas, sprint, dan kolaborasi antar anggota tim, selu
 
 | No  | Nama Lengkap                     |     NIM     | GitHub                                                           | Peran Utama & Tanggung Jawab                                                                          |
 | :-: | -------------------------------- | :---------: | ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-|  1  | **Ruhmita 1**                    | `230504012` | [`@rumiyeoon`](https://github.com/rumiyeoon)                     | **Project Manager & Backend Lead**<br>Inisiasi proyek, arsitektur database, dan validasi sistem       |
+|  1  | **Ruhmita **                    | `230504012` | [`@rumiyeoon`](https://github.com/rumiyeoon)                     | **Project Manager & Backend Lead**<br>Inisiasi proyek, arsitektur database, dan validasi sistem       |
 |  2  | **Fazah Fatahillah**             | `230504014` | [`@rizput1009`](https://github.com/rizput1009)                   | **Frontend & UI/UX Specialist**<br>Perancangan antarmuka POS, komponen Livewire Volt & Flux           |
 |  3  | **Muhammad Rifki Aulia Pratama** | `230504089` | [`@mrifkiauliap`](https://github.com/mrifkiauliap)               | **Business Analyst & Content Lead**<br>Analisis kebutuhan UMKM, pemetaan menu/stok, dan presentasi    |
 |  4  | **Rafi Alamsyah**                | `230504024` | [`@rafialamsyah720-eng`](https://github.com/rafialamsyah720-eng) | **QA Tester & Technical Writer**<br>Skenario pengujian, dokumentasi repositori, dan pengelolaan rilis |
