@@ -1,22 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Livewire\Volt\Volt;
+use App\Http\Controllers\AyamoController;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [AyamoController::class, 'shop']);
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
-
-Route::middleware(['auth'])->group(function () {
-    Route::redirect('settings', 'settings/profile');
-
-    Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
-    Volt::route('settings/password', 'settings.password')->name('settings.password');
-    Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
+Route::get('/admin/login', [AyamoController::class, 'adminLogin']);
+Route::post('/admin/login', [AyamoController::class, 'authenticate'])->middleware('throttle:10,1');
+Route::middleware('admin.session')->group(function () {
+    Route::get('/admin', [AyamoController::class, 'dashboard']);
+    Route::post('/admin/logout', [AyamoController::class, 'logout']);
+    Route::post('/admin/orders/{id}/confirm', [AyamoController::class, 'confirmOrder']);
+    Route::post('/admin/products', [AyamoController::class, 'saveProduct']);
+    Route::post('/admin/products/{id}', [AyamoController::class, 'saveProduct']);
+    Route::post('/admin/products/{id}/delete', [AyamoController::class, 'deleteProduct']);
+    Route::post('/admin/transactions', [AyamoController::class, 'manualSale']);
 });
-
-require __DIR__.'/auth.php';
