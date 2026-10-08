@@ -125,7 +125,7 @@ Untuk menjaga transparansi tugas, sprint, dan kolaborasi antar anggota tim, selu
 
 <br><br>
 
-<img src="assets/anggota/tim.png" alt="Foto Tim Kelompok" width="80%" onerror="this.src='https://placehold.co/800x400/292524/FEF08A?text=Foto+Bersama+Tim+Pengembang+Ayamo'">
+<img src="assets/tim.jpeg" alt="Foto Tim Kelompok" width="80%" onerror="this.src='https://placehold.co/800x400/292524/FEF08A?text=Foto+Bersama+Tim+Pengembang+Ayamo'">
 
 <br><br>
 
