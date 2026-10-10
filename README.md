@@ -191,7 +191,7 @@ Klik pada masing-masing level untuk meninjau rincian pekerjaan:
 </details>
 
 <details>
-<summary><b>🔒 LEVEL 4 — Perancangan (Design & Architecture)</b></summary>
+<summary><b>🔹 LEVEL 4 — Perancangan (Design & Architecture)</b> &nbsp; ▶ Sedang Berjalan</summary>
 
 <br>
 
@@ -204,7 +204,7 @@ Klik pada masing-masing level untuk meninjau rincian pekerjaan:
 </details>
 
 <details>
-<summary><b>🔒 LEVEL 5 — Pengembangan Aplikasi (Implementation)</b></summary>
+<summary><b>🔹 LEVEL 5 — Pengembangan Aplikasi (Implementation)</b> &nbsp; ▶ Sedang Berjalan</summary>
 
 <br>
 
