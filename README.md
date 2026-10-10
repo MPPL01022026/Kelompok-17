@@ -186,7 +186,7 @@ Klik pada masing-masing level untuk meninjau rincian pekerjaan:
 - **3.2** Penyusunan kebutuhan fungsional (FR) dan non-fungsional (NFR).
 - **3.3** Perancangan use case diagram dan alur proses bisnis kasir/owner.
 
-📄 Terkait: [`docs/features-and-modules.md`](/docs/features-and-modules.md)
+📄 Terkait: [`docs/requirements/features-and-modules.md`](/docs/requirements/features-and-modules.md)
 
 </details>
 
@@ -199,7 +199,7 @@ Klik pada masing-masing level untuk meninjau rincian pekerjaan:
 - **4.2** Perancangan UI/UX antarmuka kasir (POS) dan panel admin dashboard.
 - **4.3** Penetapan standarisasi penanganan error UI & komponen Blade/Volt.
 
-📄 Terkait: [`docs/architecture.md`](/docs/architecture.md) · [`docs/standards-and-conventions.md`](/docs/standards-and-conventions.md)
+📄 Terkait: [`docs/requirements/architecture.md`](/docs/requirements/architecture.md) · [`docs/requirements/standards-and-conventions.md`](/docs/requirements/standards-and-conventions.md)
 
 </details>
 
