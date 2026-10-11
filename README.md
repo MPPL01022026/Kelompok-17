@@ -51,12 +51,12 @@
 
 <br>
 
-| Kategori             | Item Produk                |
-| -------------------- | -------------------------- |
-|         ayam         | bagian dada,sayap          |
-                       | paha atas,paha bawah       | 
-                       | hati,kepala,ceker,leher    |
-|         bakso        |
+| Kategori                | Item Produk       |
+| ----------------------- | ----------------- |
+| ayam                    | bagian dada,sayap |
+| paha atas,paha bawah    |
+| hati,kepala,ceker,leher |
+| bakso                   |
 
 </details>
 
@@ -128,14 +128,12 @@ Untuk menjaga transparansi tugas, sprint, dan kolaborasi antar anggota tim, selu
 
 </div>
 
-| No  | Nama Lengkap                     |     NIM     | GitHub                                                           | Peran Utama & Tanggung Jawab                                                                          |
-| :-: | -------------------------------- | :---------: | ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-|  1  | **Ruhmita **                    | `230504012` | [`@rumiyeoon`](https://github.com/rumiyeoon)                     | **Project Manager & Backend Lead**<br>Inisiasi proyek, arsitektur database, dan validasi sistem       |
-|  2  | **Fazah Fatahillah**             | `230504014` | [`@rizput1009`](https://github.com/rizput1009)                   | **Frontend & UI/UX Specialist**<br>Perancangan antarmuka POS, komponen Livewire Volt & Flux           |
-|  3  | **Muhammad Rifki Aulia Pratama** | `230504089` | [`@mrifkiauliap`](https://github.com/mrifkiauliap)               | **Business Analyst & Content Lead**<br>Analisis kebutuhan UMKM, pemetaan menu/stok, dan presentasi    |
-|  4  | **Rafi Alamsyah**                | `230504024` | [`@rafialamsyah720-eng`](https://github.com/rafialamsyah720-eng) | **QA Tester & Technical Writer**<br>Skenario pengujian, dokumentasi repositori, dan pengelolaan rilis |
-
-> 💡 _Foto bersama seluruh anggota tim dapat disimpan di folder [`assets/anggota/tim.png`](/assets/anggota)._
+| No  | Nama Lengkap                     |     NIM     | GitHub                                                           | Peran Utama & Tanggung Jawab                                                                                                              |
+| :-: | -------------------------------- | :---------: | ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+|  1  | **Ruhmita**                      | `230504012` | [`@rumiyeoon`](https://github.com/rumiyeoon)                     | **Project Manager & Business Analyst**<br>Inisiasi proyek, analisis kebutuhan UMKM, pemetaan menu katalog, dan pemetaan arsitektur sistem |
+|  2  | **Fazah Fatahillah**             | `230504014` | [`@rizput1009`](https://github.com/rizput1009)                   | **Frontend & UI/UX Specialist**<br>Perancangan antarmuka, komponen Livewire & Flux, dan implementasi UI/UX                                |
+|  3  | **Muhammad Rifki Aulia Pratama** | `230504089` | [`@mrifkiauliap`](https://github.com/mrifkiauliap)               | **Backend Lead & DevOps**<br> Perancangan sistem, perancangan database, dan pengelolaan hosting dan keamanan                              |
+|  4  | **Rafi Alamsyah**                | `230504024` | [`@rafialamsyah720-eng`](https://github.com/rafialamsyah720-eng) | **QA Tester & Technical Writer**<br>Skenario pengujian, dokumentasi repositori, dan pengelolaan rilis                                     |
 
 <img src="assets/divider.svg" width="100%" alt="Divider">
 
