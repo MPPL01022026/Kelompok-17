@@ -7,6 +7,7 @@
 [![Tentang](https://img.shields.io/badge/TENTANG-7C2D12?style=for-the-badge)](#-tentang-proyek)
 [![Tech Stack](https://img.shields.io/badge/TECH%20STACK-C2410C?style=for-the-badge)](#%EF%B8%8F-technology-stack)
 [![Trello](https://img.shields.io/badge/TRELLO%20WORKSPACE-0079BF?style=for-the-badge&logo=trello&logoColor=white)](https://trello.com/invite/b/6ab62b128d44819f9f5248bf/ATTIe868d57bb29db6d9526ef84b8ddb2664AE14D58D/ayamo)
+[![Figma](https://img.shields.io/badge/FIGMA%20MOCKUP-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/design/1eqVfEPtoZpmDb4cUy9i60/Ayamo?node-id=6-2&t=FBl8vIPqf5UpQQzH-1)
 [![Tim](https://img.shields.io/badge/TIM%20PENGEMBANG-EA580C?style=for-the-badge)](#-tim-pengembang)
 [![Level](https://img.shields.io/badge/PETA%20LEVEL-D97706?style=for-the-badge)](#%EF%B8%8F-peta-level-proyek)
 [![Dokumen](https://img.shields.io/badge/DOKUMEN-B45309?style=for-the-badge)](#-dokumen-proyek)
@@ -196,8 +197,9 @@ Klik pada masing-masing level untuk meninjau rincian pekerjaan:
 - **4.1** Desain skema basis data relasional (ERD) dan integritas tabel.
 - **4.2** Perancangan UI/UX antarmuka kasir (POS) dan panel admin dashboard.
 - **4.3** Penetapan standarisasi penanganan error UI & komponen Blade/Volt.
+- **4.4** ✅ Perancangan mockup UI Mobile View (17 screen) — selesai di Figma.
 
-📄 Terkait: [`docs/requirements/architecture.md`](/docs/requirements/architecture.md) · [`docs/requirements/standards-and-conventions.md`](/docs/requirements/standards-and-conventions.md)
+📄 Terkait: [`docs/requirements/architecture.md`](/docs/requirements/architecture.md) · [`docs/requirements/standards-and-conventions.md`](/docs/requirements/standards-and-conventions.md) · [`docs/mockup/mobile/README.md`](/docs/mockup/mobile/README.md) · [🎨 Figma Mockup Mobile](https://www.figma.com/design/1eqVfEPtoZpmDb4cUy9i60/Ayamo?node-id=6-2&t=FBl8vIPqf5UpQQzH-1)
 
 </details>
 
@@ -261,35 +263,44 @@ Seluruh dokumentasi teknis dan manajemen proyek disusun secara modular dan terst
 |  4  | **Spesifikasi Modul & Fitur** | [`docs/features-and-modules.md`](/docs/features-and-modules.md)           | Rincian modul POS, inventori, laporan, & user   |   ✅   |
 |  5  | **Roadmap Pengembangan**      | [`plan/roadmap-umkm-ayamo.md`](/plan/roadmap-umkm-ayamo.md)               | Roadmap tahapan sprint & deliverables           |   ✅   |
 |  6  | **Inisialisasi Proyek**       | [`plan/25-09-26-init.md`](/plan/25-09-26-init.md)                         | Catatan ketetapan awal techstack & integrasi    |   ✅   |
+|  7  | **Mockup UI Mobile**          | [`docs/mockup/mobile/README.md`](/docs/mockup/mobile/README.md)           | 17 screen mockup UI mobile view (Figma)         |   ✅   |
+|  8  | **Dokumentasi Mobile View**   | [`docs/mobile/README.md`](/docs/mobile/README.md)                         | Panduan implementasi & spesifikasi teknis mobile|   ✅   |
 
 <details>
 <summary><b>📁 Struktur Direktori Repositori</b></summary>
 
 ```text
 ayamo/
-├── app/                  # Direktori sumber aplikasi Laravel
-│   ├── app/              # Model, Controller, Provider, Livewire components
-│   ├── database/         # Migrations, Seeders, Factories
-│   ├── resources/        # Views (Blade, Volt, Flux), CSS, JS
-│   ├── routes/           # Routing web & auth
-│   └── vite.config.js    # Konfigurasi bundler frontend
-├── assets/               # Aset visual & dokumentasi grafis
-│   ├── banner.svg        # Banner vektor repositori
-│   ├── divider.svg       # Pembatas dekoratif
-│   ├── footer.svg        # Footer vektor
-│   ├── levels.svg        # Roadmap level visual
-│   ├── team.svg          # Header tim pengembang
-│   ├── logo.webp         # Logo resmi Ayamo
-│   └── anggota/          # Foto profil anggota tim
-├── docs/                 # Dokumentasi sistem & laporan MPPL
-│   ├── architecture.md   # Arsitektur sistem & alur data
-│   ├── features-and-modules.md  # Spesifikasi modul fitur
-│   ├── standards-and-conventions.md # Pedoman koding & validasi
-│   └── SURVEY/           # Dokumen survei, Charter, WBS, Stakeholder
-├── plan/                 # Rencana kerja & sprint backlog
-│   ├── 25-09-26-init.md  # Inisialisasi arsitektur awal
+├── app/                      # Direktori sumber aplikasi Laravel
+│   ├── app/                  # Model, Controller, Provider, Livewire components
+│   ├── database/             # Migrations, Seeders, Factories
+│   ├── resources/            # Views (Blade, Volt, Flux), CSS, JS
+│   ├── routes/               # Routing web & auth
+│   └── vite.config.js        # Konfigurasi bundler frontend
+├── assets/                   # Aset visual & dokumentasi grafis
+│   ├── banner.svg            # Banner vektor repositori
+│   ├── divider.svg           # Pembatas dekoratif
+│   ├── footer.svg            # Footer vektor
+│   ├── levels.svg            # Roadmap level visual
+│   ├── team.svg              # Header tim pengembang
+│   ├── logo.webp             # Logo resmi Ayamo
+│   └── anggota/             # Foto profil anggota tim
+├── docs/                     # Dokumentasi sistem & laporan MPPL
+│   ├── mobile/              # 📱 Dokumentasi Mobile View (implementasi & spesifikasi)
+│   │   └── README.md        # Panduan teknis & design tokens mobile
+│   ├── mockup/              # Aset & dokumentasi desain UI/UX
+│   │   ├── mobile/          # 📸 17 screenshot mockup mobile (Figma)
+│   │   │   └── README.md    # Dokumentasi lengkap setiap screen
+│   │   └── web/             # Aset mockup desktop/web view
+│   ├── requirements/        # Spesifikasi kebutuhan sistem
+│   │   ├── architecture.md  # Arsitektur sistem & alur data
+│   │   ├── features-and-modules.md  # Spesifikasi modul fitur
+│   │   └── standards-and-conventions.md # Pedoman koding & validasi
+│   └── SURVEY/              # Dokumen survei, Charter, WBS, Stakeholder
+├── plan/                     # Rencana kerja & sprint backlog
+│   ├── 25-09-26-init.md      # Inisialisasi arsitektur awal
 │   └── roadmap-umkm-ayamo.md # Roadmap implementasi bertahap
-└── README.md             # Dokumentasi utama repositori
+└── README.md                 # Dokumentasi utama repositori
 ```
 
 </details>
