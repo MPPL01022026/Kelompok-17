@@ -6,7 +6,7 @@
 
 [![Tentang](https://img.shields.io/badge/TENTANG-7C2D12?style=for-the-badge)](#-tentang-proyek)
 [![Tech Stack](https://img.shields.io/badge/TECH%20STACK-C2410C?style=for-the-badge)](#%EF%B8%8F-technology-stack)
-[![Lark](https://img.shields.io/badge/LARK%20BASE-3370FF?style=for-the-badge&logo=lark&logoColor=white)](https://zjpwcuecoylf.jp.larksuite.com/base/Zl4qbsdyeaYoJwsvF6zjJ24Cp5b?from=from_copylink)
+[![Lark](https://img.shields.io/badge/LARK-3370FF?style=for-the-badge&logo=lark&logoColor=white)](https://zjpwcuecoylf.jp.larksuite.com/base/Zl4qbsdyeaYoJwsvF6zjJ24Cp5b?from=from_copylink)
 [![Figma](https://img.shields.io/badge/FIGMA%20MOCKUP-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/design/1eqVfEPtoZpmDb4cUy9i60/Ayamo?node-id=6-2&t=FBl8vIPqf5UpQQzH-1)
 [![Tim](https://img.shields.io/badge/TIM%20PENGEMBANG-EA580C?style=for-the-badge)](#-tim-pengembang)
 [![Level](https://img.shields.io/badge/PETA%20LEVEL-D97706?style=for-the-badge)](#%EF%B8%8F-peta-level-proyek)
