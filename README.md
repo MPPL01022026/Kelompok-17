@@ -6,7 +6,7 @@
 
 [![Tentang](https://img.shields.io/badge/TENTANG-7C2D12?style=for-the-badge)](#-tentang-proyek)
 [![Tech Stack](https://img.shields.io/badge/TECH%20STACK-C2410C?style=for-the-badge)](#%EF%B8%8F-technology-stack)
-[![Trello](https://img.shields.io/badge/TRELLO%20WORKSPACE-0079BF?style=for-the-badge&logo=trello&logoColor=white)](https://trello.com/invite/b/6ab62b128d44819f9f5248bf/ATTIe868d57bb29db6d9526ef84b8ddb2664AE14D58D/ayamo)
+[![Lark Base](https://img.shields.io/badge/LARK%20BASE-3370FF?style=for-the-badge&logo=lark&logoColor=white)](https://zjpwcuecoylf.jp.larksuite.com/base/Zl4qbsdyeaYoJwsvF6zjJ24Cp5b?from=from_copylink)
 [![Figma](https://img.shields.io/badge/FIGMA%20MOCKUP-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/design/1eqVfEPtoZpmDb4cUy9i60/Ayamo?node-id=6-2&t=FBl8vIPqf5UpQQzH-1)
 [![Tim](https://img.shields.io/badge/TIM%20PENGEMBANG-EA580C?style=for-the-badge)](#-tim-pengembang)
 [![Level](https://img.shields.io/badge/PETA%20LEVEL-D97706?style=for-the-badge)](#%EF%B8%8F-peta-level-proyek)
@@ -15,13 +15,13 @@
 
 <br>
 
-![Status](https://img.shields.io/badge/Status-Tahap%20Perencanaan%20%26%20Analisis-EA580C?style=flat-square&logo=gitbook&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Minggu%205%20dari%2010%20Pengembangan-EA580C?style=flat-square&logo=gitbook&logoColor=white)
 ![Laravel](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=flat-square&logo=laravel&logoColor=white)
 ![Livewire](https://img.shields.io/badge/Livewire-3.x%20Volt-FB70A9?style=flat-square&logo=livewire&logoColor=white)
 ![Tailwind](https://img.shields.io/badge/TailwindCSS-v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-8.4+-777BB4?style=flat-square&logo=php&logoColor=white)
 ![MySQL](https://img.shields.io/badge/Database-MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
-![Trello](https://img.shields.io/badge/Trello-Board%20Aktif-0079BF?style=flat-square&logo=trello&logoColor=white)
+![Lark](https://img.shields.io/badge/Lark%20Base-Project%20Control-3370FF?style=flat-square&logo=lark&logoColor=white)
 ![Matkul](https://img.shields.io/badge/MPPL-Manajemen%20Proyek%20Perangkat%20Lunak-7C2D12?style=flat-square)
 
 **Merencanakan dan membangun ekosistem digital terintegrasi untuk UMKM Kuliner Ayamo: Point of Sale kasir, katalog menu dinamis, inventori bahan baku, dan laporan performa penjualan.**
@@ -36,7 +36,7 @@
 
 > 🎯 **MISI:** Membangun platform digital UMKM Ayamo untuk mempercepat transaksi kasir, mengelola katalog produk secara terpusat, memantau pergerakan stok harian, dan menghasilkan laporan analitik penjualan secara real-time.
 > 🕹️ **STUDI KASUS:** UMKM Kuliner Ayamo (_Eat Chill Repeat_).
-> 🏁 **STAGE SAAT INI:** Tahap Inisiasi & Perencanaan selesai, sedang berjalan pada tahap Analisis Kebutuhan & Perancangan Sistem.
+> 🏁 **STAGE SAAT INI:** Minggu 5 dari baseline 10 minggu. Inisiasi, kebutuhan, dan desain awal telah selesai; pengembangan produk serta customer panel sedang berjalan.
 
 **Ayamo** adalah UMKM kuliner yang menyajikan berbagai olahan ayam geprek, ayam krispi, paket nasi, serta aneka minuman segar. Seiring bertambahnya variasi pesanan dan volume transaksi, diperlukan sistem kasir dan operasional yang andal, responsif, dan mudah digunakan langsung dari meja kasir maupun perangkat seluler.
 
@@ -52,12 +52,11 @@
 
 <br>
 
-| Kategori                | Item Produk       |
-| ----------------------- | ----------------- |
-| ayam                    | bagian dada,sayap |
-| paha atas,paha bawah    |
-| hati,kepala,ceker,leher |
-| bakso                   |
+| Kategori | Item Produk |
+|---|---|
+| Ayam | Dada, sayap, paha atas, dan paha bawah |
+| Pelengkap | Hati, kepala, ceker, dan leher |
+| Lainnya | Bakso |
 
 </details>
 
@@ -82,34 +81,35 @@
 | **Styling Engine**       | [Tailwind CSS v4](https://tailwindcss.com/) & Vite                                            | Utility-first CSS engine super cepat dan teroptimasi                  |
 | **Client Interactivity** | Alpine.js                                                                                     | Micro-interactions, dropdown, modal state sisi klien                  |
 | **Database**             | MySQL / MariaDB                                                                               | Penyimpanan data relasional transaksional ACID compliant              |
-| **Dev & Collab Tools**   | Git, GitHub, VSCode, Trello, Docker                                                           | Manajemen source code, pelacakan tugas, dan standarisasi workspace    |
+| **Dev & Collab Tools**   | Git, GitHub, VSCode, Lark Base, Docker                                                        | Source code, project control, dan standarisasi workspace              |
 
 </div>
 
 <img src="assets/divider.svg" width="100%" alt="Divider">
 
-<a id="trello-workspace"></a>
+<a id="lark-base"></a>
 
-## 📋 Manajemen Proyek & Workspace Trello
+## 📋 Manajemen Proyek dengan Lark Base
 
-Untuk menjaga transparansi tugas, sprint, dan kolaborasi antar anggota tim, seluruh backlog dan aktivitas pengembangan dikelola melalui Trello Board resmi proyek:
+Lark Base menjadi **single source of truth** untuk jadwal, sprint, PIC, effort, biaya, risiko, dan progres proyek. Dengan satu pusat data, tim tidak perlu memperbarui status yang sama pada beberapa aplikasi.
 
 <div align="center">
 
-[![Trello Board](https://img.shields.io/badge/Buka%20Workspace-Trello%20Ayamo-0079BF?style=for-the-badge&logo=trello&logoColor=white)](https://trello.com/invite/b/6ab62b128d44819f9f5248bf/ATTIe868d57bb29db6d9526ef84b8ddb2664AE14D58D/ayamo)
-
-**🔗 Link Undangan Workspace Trello:**
-[https://trello.com/invite/b/6ab62b128d44819f9f5248bf/ATTIe868d57bb29db6d9526ef84b8ddb2664AE14D58D/ayamo](https://trello.com/invite/b/6ab62b128d44819f9f5248bf/ATTIe868d57bb29db6d9526ef84b8ddb2664AE14D58D/ayamo)
+[![Buka Lark Base](https://img.shields.io/badge/Buka%20Project%20Control-Lark%20Base-3370FF?style=for-the-badge&logo=lark&logoColor=white)](https://zjpwcuecoylf.jp.larksuite.com/base/Zl4qbsdyeaYoJwsvF6zjJ24Cp5b?from=from_copylink)
 
 </div>
 
-| List Trello                   | Deskripsi Aktivitas                                                            |
-| ----------------------------- | ------------------------------------------------------------------------------ |
-| 📌 **Project Backlog**        | Kumpulan seluruh kebutuhan fitur, perbaikan, dan riset yang akan dikerjakan    |
-| 📝 **To Do / Sprint Backlog** | Tugas yang diprioritaskan pada iterasi/minggu yang sedang berjalan             |
-| ⏳ **In Progress**            | Tugas yang sedang aktif dikerjakan oleh anggota tim penanggung jawab           |
-| 🔍 **Review / Testing**       | Pengujian fungsionalitas, validasi input, dan pengecekan kode sebelum digabung |
-| ✅ **Done**                   | Fitur dan dokumentasi yang telah selesai, diverifikasi, dan siap digunakan     |
+| Tabel atau View Lark Base | Fungsi |
+|---|---|
+| **Master Schedule** | Aktivitas WBS, sprint, tanggal, dependensi, PIC, dan status |
+| **Resource and Effort** | Peran anggota, alokasi manday, dan beban kerja |
+| **Project Cost** | Biaya tenaga kerja, layanan, operasional, dan cadangan |
+| **Risk Register** | Probabilitas, dampak, mitigasi, pemilik, dan indikator risiko |
+| **Sprint Board** | Tampilan Kanban berdasarkan Backlog, To Do, In Progress, Review, Blocked, dan Done |
+
+Baseline proyek berlangsung selama **10 minggu, 24 September-2 Desember 2026**. Setiap sprint berdurasi satu minggu dan ditutup dengan review. Rincian aktivitas, milestone, manday, biaya, dan risiko tersedia pada [Rencana Pengelolaan Proyek](/docs/project-management-output.md), sedangkan pembagian sprint tersedia pada [Roadmap 10 Minggu](/plan/roadmap-umkm-ayamo.md).
+
+Seluruh data operasional tersebut dikelola pada [Lark Base Proyek Ayamo](https://zjpwcuecoylf.jp.larksuite.com/base/Zl4qbsdyeaYoJwsvF6zjJ24Cp5b?from=from_copylink).
 
 <img src="assets/divider.svg" width="100%" alt="Divider">
 
@@ -132,9 +132,11 @@ Untuk menjaga transparansi tugas, sprint, dan kolaborasi antar anggota tim, selu
 | No  | Nama Lengkap                     |     NIM     | GitHub                                                           | Peran Utama & Tanggung Jawab                                                                                                              |
 | :-: | -------------------------------- | :---------: | ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 |  1  | **Ruhmita**                      | `230504012` | [`@rumiyeoon`](https://github.com/rumiyeoon)                     | **Project Manager & Business Analyst**<br>Inisiasi proyek, analisis kebutuhan UMKM, pemetaan menu katalog, dan pemetaan arsitektur sistem |
-|  2  | **Fazah Fatahillah**             | `230504014` | [`@rizput1009`](https://github.com/rizput1009)                   | **Frontend & UI/UX Specialist**<br>Perancangan antarmuka, komponen Livewire & Flux, dan implementasi UI/UX                                |
+|  2  | **Fazah Fatahillah**             | `230504014` | [`@rizput1009`](https://github.com/rizput1009)                   | **Frontend & UI/UX Specialist**<br>Perancangan antarmuka, design system, komponen frontend, responsivitas, dan implementasi UI/UX          |
 |  3  | **Muhammad Rifki Aulia Pratama** | `230504089` | [`@mrifkiauliap`](https://github.com/mrifkiauliap)               | **Backend Lead & DevOps**<br> Perancangan sistem, perancangan database, dan pengelolaan hosting dan keamanan                              |
-|  4  | **Rafi Alamsyah**                | `230504024` | [`@rafialamsyah720-eng`](https://github.com/rafialamsyah720-eng) | **QA Tester & Technical Writer**<br>Skenario pengujian, dokumentasi repositori, dan pengelolaan rilis                                     |
+|  4  | **Rafi Alamsyah**                | `230504024` | [`@rafialamsyah720-eng`](https://github.com/rafialamsyah720-eng) | **Frontend Developer & QA Tester**<br>Implementasi frontend bersama Fazah, skenario uji, pengujian integrasi/regresi, dan validasi rilis   |
+
+Dokumentasi teknis tidak dibebankan kepada satu peran khusus. Setiap anggota bertanggung jawab memperbarui dokumentasi untuk requirement, desain, kode, pengujian, atau proses manajemen yang dikerjakannya.
 
 <img src="assets/divider.svg" width="100%" alt="Divider">
 
@@ -143,7 +145,7 @@ Untuk menjaga transparansi tugas, sprint, dan kolaborasi antar anggota tim, selu
 ## 🗺️ Peta Level Proyek (Tahapan MPPL)
 
 <div align="center">
-<img src="assets/levels.svg" alt="Peta Level Proyek" width="100%">
+<img src="assets/levels.svg" alt="Peta level proyek dengan tahap pengembangan aktif pada Minggu 5 dari 10" width="100%">
 </div>
 
 Klik pada masing-masing level untuk meninjau rincian pekerjaan:
@@ -158,7 +160,7 @@ Klik pada masing-masing level untuk meninjau rincian pekerjaan:
 - **1.3** Penyusunan Project Charter dan batas ruang lingkup proyek.
 - **1.4** Identifikasi pemangku kepentingan (Stakeholder Register).
 
-📄 Terkait: [`docs/SURVEY/Project Charter.docx`](/docs/SURVEY/Project%20Charter.docx) · [`docs/SURVEY/Stakeholder Register.docx`](/docs/SURVEY/Stakeholder%20Register.docx)
+📄 Terkait: [Dokumen Perencanaan dan Project Charter](/docs/survey/Dokumen%20Peremcanaan%20Proyek%20%28%20Project%20Manajement%20%29.docx)
 
 </details>
 
@@ -169,15 +171,15 @@ Klik pada masing-masing level untuk meninjau rincian pekerjaan:
 
 - **2.1** Penyusunan Work Breakdown Structure (WBS) menyeluruh.
 - **2.2** Pembagian peran, deskripsi tugas, dan estimasi waktu kerja.
-- **2.3** Penyiapan workspace Trello, Git workflow, dan arsitektur repositori.
+- **2.3** Penyiapan Lark Base, Git workflow, dan arsitektur repositori.
 - **2.4** Inisialisasi struktur starter kit Laravel 12, Livewire Volt, dan Tailwind CSS v4.
 
-📄 Terkait: [`docs/SURVEY/WBS.docx`](/docs/SURVEY/WBS.docx) · [`plan/25-09-26-init.md`](/plan/25-09-26-init.md)
+📄 Terkait: [WBS 10 Minggu](/docs/survey/WBS-10-Minggu.md) · [Rencana Pengelolaan Proyek](/docs/project-management-output.md) · [Roadmap 10 Minggu](/plan/roadmap-umkm-ayamo.md)
 
 </details>
 
 <details>
-<summary><b>🔹 LEVEL 3 — Analisis Kebutuhan Sistem</b> &nbsp; ▶ Sedang Berjalan</summary>
+<summary><b>⭐ LEVEL 3 — Analisis Kebutuhan Sistem</b> &nbsp; ✅ Baseline Selesai</summary>
 
 <br>
 
@@ -190,7 +192,7 @@ Klik pada masing-masing level untuk meninjau rincian pekerjaan:
 </details>
 
 <details>
-<summary><b>🔹 LEVEL 4 — Perancangan (Design & Architecture)</b> &nbsp; ▶ Sedang Berjalan</summary>
+<summary><b>⭐ LEVEL 4 — Perancangan (Design & Architecture)</b> &nbsp; ✅ Baseline Selesai</summary>
 
 <br>
 
@@ -240,9 +242,9 @@ Klik pada masing-masing level untuk meninjau rincian pekerjaan:
 ### 📊 Ringkasan Progres Proyek
 
 - [x] **Level 1 — Inisiasi:** Ide proyek, latar belakang UMKM, Project Charter, Stakeholder Register
-- [x] **Level 2 — Perencanaan:** Struktur WBS, setup Git & Trello Workspace, inisialisasi TAILL Stack
-- [ ] **Level 3 — Analisis Kebutuhan:** Spesifikasi modul, inventarisasi menu & alur kasir
-- [ ] **Level 4 — Perancangan:** Skema database final, mockup UI Flux, konvensi error modal
+- [x] **Level 2 — Perencanaan:** Struktur WBS, setup Git dan Lark Base, serta inisialisasi TAILL Stack
+- [x] **Level 3 — Analisis Kebutuhan:** Spesifikasi modul, inventarisasi menu & alur kasir
+- [x] **Level 4 — Perancangan:** Baseline database, mockup UI, arsitektur, dan konvensi teknis
 - [ ] **Level 5 — Pengembangan:** Implementasi fitur POS, manajemen inventori, dan analitik
 - [ ] **Level 6 — Pengujian:** Testing skenario kasir, perbaikan bug, validasi owner
 - [ ] **Level 7 — Dokumentasi & Rilis:** Laporan akhir MPPL, video demo, dan penutupan proyek
@@ -257,14 +259,15 @@ Seluruh dokumentasi teknis dan manajemen proyek disusun secara modular dan terst
 
 | No  | Dokumen                       | Lokasi Berkas                                                             | Fokus Pembahasan                                | Status |
 | :-: | ----------------------------- | ------------------------------------------------------------------------- | ----------------------------------------------- | :----: |
-|  1  | **Indeks Dokumentasi**        | [`docs/README.md`](/docs/README.md)                                       | Gambaran umum seluruh dokumen sistem            |   ✅   |
-|  2  | **Arsitektur Sistem**         | [`docs/architecture.md`](/docs/architecture.md)                           | TAILL Stack, relasi data, & alur kerja komponen |   ✅   |
-|  3  | **Standar & Konvensi**        | [`docs/standards-and-conventions.md`](/docs/standards-and-conventions.md) | Pedoman error handling, penamaan, & validasi    |   ✅   |
-|  4  | **Spesifikasi Modul & Fitur** | [`docs/features-and-modules.md`](/docs/features-and-modules.md)           | Rincian modul POS, inventori, laporan, & user   |   ✅   |
-|  5  | **Roadmap Pengembangan**      | [`plan/roadmap-umkm-ayamo.md`](/plan/roadmap-umkm-ayamo.md)               | Roadmap tahapan sprint & deliverables           |   ✅   |
-|  6  | **Inisialisasi Proyek**       | [`plan/25-09-26-init.md`](/plan/25-09-26-init.md)                         | Catatan ketetapan awal techstack & integrasi    |   ✅   |
+|  1  | **Rencana Pengelolaan Proyek** | [`docs/project-management-output.md`](/docs/project-management-output.md) | Jadwal, WBS, resource, manday, biaya, dan risiko |   ✅   |
+|  2  | **Arsitektur Sistem**         | [`docs/requirements/architecture.md`](/docs/requirements/architecture.md) | Arsitektur, relasi data, dan alur komponen      |   ✅   |
+|  3  | **Standar & Konvensi**        | [`docs/requirements/standards-and-conventions.md`](/docs/requirements/standards-and-conventions.md) | Pedoman error handling, penamaan, dan validasi |   ✅   |
+|  4  | **Spesifikasi Modul & Fitur** | [`docs/requirements/features-and-modules.md`](/docs/requirements/features-and-modules.md) | Rincian POS, inventori, laporan, dan user |   ✅   |
+|  5  | **Roadmap Pengembangan**      | [`plan/roadmap-umkm-ayamo.md`](/plan/roadmap-umkm-ayamo.md)               | Roadmap 10 sprint dan deliverable               |   ✅   |
+|  6  | **WBS Revisi 10 Minggu** | [`docs/survey/WBS-10-Minggu.md`](/docs/survey/WBS-10-Minggu.md) | Struktur pekerjaan dan pemetaan sepuluh minggu |   ✅   |
 |  7  | **Mockup UI Mobile**          | [`docs/mockup/mobile/README.md`](/docs/mockup/mobile/README.md)           | 17 screen mockup UI mobile view (Figma)         |   ✅   |
 |  8  | **Dokumentasi Mobile View**   | [`docs/mobile/README.md`](/docs/mobile/README.md)                         | Panduan implementasi & spesifikasi teknis mobile|   ✅   |
+|  9  | **Project Control Lark Base** | [Buka Lark Base Ayamo](https://zjpwcuecoylf.jp.larksuite.com/base/Zl4qbsdyeaYoJwsvF6zjJ24Cp5b?from=from_copylink) | Jadwal, PIC, effort, biaya, dan risk register |   🔄   |
 
 <details>
 <summary><b>📁 Struktur Direktori Repositori</b></summary>
@@ -296,10 +299,9 @@ ayamo/
 │   │   ├── architecture.md  # Arsitektur sistem & alur data
 │   │   ├── features-and-modules.md  # Spesifikasi modul fitur
 │   │   └── standards-and-conventions.md # Pedoman koding & validasi
-│   └── SURVEY/              # Dokumen survei, Charter, WBS, Stakeholder
+│   └── survey/              # Dokumen survei, Charter, WBS, dan Stakeholder
 ├── plan/                     # Rencana kerja & sprint backlog
-│   ├── 25-09-26-init.md      # Inisialisasi arsitektur awal
-│   └── roadmap-umkm-ayamo.md # Roadmap implementasi bertahap
+│   └── roadmap-umkm-ayamo.md # Roadmap implementasi 10 minggu
 └── README.md                 # Dokumentasi utama repositori
 ```
 
