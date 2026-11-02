@@ -1,0 +1,57 @@
+{
+    "id": "/mobile",
+    "name": "AYAMO - Eat, Chill, Repeat",
+    "short_name": "Ayamo",
+    "description": "Pesan ayam goreng crispy favoritmu di Ayamo. Renyah di luar, lembut di dalam!",
+    "start_url": "/mobile",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#F59E0B",
+    "theme_color": "#B83809",
+    "lang": "id-ID",
+    "icons": [
+        {
+            "src": "/img/logo.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/img/logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/img/logo.webp",
+            "sizes": "512x512",
+            "type": "image/webp",
+            "purpose": "any"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Menu Ayamo",
+            "short_name": "Menu",
+            "description": "Lihat daftar menu ayam crispy",
+            "url": "/mobile/menu",
+            "icons": [{ "src": "/img/logo.png", "sizes": "192x192", "type": "image/png" }]
+        },
+        {
+            "name": "Keranjang",
+            "short_name": "Keranjang",
+            "description": "Lihat keranjang pesananmu",
+            "url": "/mobile/cart",
+            "icons": [{ "src": "/img/logo.png", "sizes": "192x192", "type": "image/png" }]
+        },
+        {
+            "name": "Riwayat Pesanan",
+            "short_name": "Riwayat",
+            "description": "Cek status dan riwayat pesanan",
+            "url": "/mobile/history",
+            "icons": [{ "src": "/img/logo.png", "sizes": "192x192", "type": "image/png" }]
+        }
+    ]
+}
+

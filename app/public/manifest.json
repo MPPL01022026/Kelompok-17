@@ -1,0 +1,28 @@
+{
+    "id": "/mobile",
+    "name": "AYAMO - Eat, Chill, Repeat",
+    "short_name": "Ayamo",
+    "description": "Pesan ayam goreng crispy favoritmu di Ayamo. Renyah di luar, lembut di dalam!",
+    "start_url": "/mobile",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#F59E0B",
+    "theme_color": "#B83809",
+    "lang": "id-ID",
+    "icons": [
+        {
+            "src": "/img/logo.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/img/logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
+

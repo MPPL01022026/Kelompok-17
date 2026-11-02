@@ -10,12 +10,14 @@ class Product extends Model
     use HasFactory;
 
     public const DEFAULT_PRODUCTS = [
-        ['id' => 'combo-original', 'name' => 'Ayam Crispy Original', 'category' => 'Ayam Goreng', 'price' => 15000, 'stock' => 40, 'description' => 'Ayam goreng crispy bumbu original, renyah di luar juicy di dalam.', 'image_url' => '/img/combo-original.jpg'],
-        ['id' => 'combo-pedas', 'name' => 'Ayam Crispy Pedas', 'category' => 'Ayam Goreng', 'price' => 16000, 'stock' => 35, 'description' => 'Sensasi pedas gurih dengan racikan cabai pilihan Ayamo.', 'image_url' => '/img/combo-pedas.jpg'],
-        ['id' => 'paket-nasi', 'name' => 'Paket Nasi + Ayam', 'category' => 'Paket Hemat', 'price' => 22000, 'stock' => 30, 'description' => '1 potong ayam crispy, nasi hangat, sambal, dan lalapan segar.', 'image_url' => '/img/paket-nasi.jpg'],
-        ['id' => 'paket-combo', 'name' => 'Combo Nasi + Ayam + Es Teh', 'category' => 'Paket Hemat', 'price' => 26000, 'stock' => 28, 'description' => 'Paket lengkap: nasi, ayam crispy, sambal, dan es teh manis.', 'image_url' => '/img/paket-combo.jpg'],
-        ['id' => 'sayap-crispy', 'name' => 'Sayap Crispy (3 pcs)', 'category' => 'Ayam Goreng', 'price' => 18000, 'stock' => 25, 'description' => 'Tiga potong sayap crispy renyah, cocok untuk cemilan.', 'image_url' => '/img/sayap-crispy.jpg'],
-        ['id' => 'paket-keluarga', 'name' => 'Paket Keluarga (5 pcs + 3 Nasi)', 'category' => 'Paket Keluarga', 'price' => 89000, 'stock' => 15, 'description' => 'Lima potong ayam crispy, tiga porsi nasi, dan sambal spesial.', 'image_url' => '/img/paket-keluarga.jpg'],
+        ['id' => 'dada-ayam', 'name' => 'Dada Ayam', 'category' => 'Ayam', 'price' => 7000, 'stock' => 50, 'description' => 'Dada ayam crispy, tebal dan juicy', 'image_url' => '/img/cat-dada.png'],
+        ['id' => 'sayap-ayam', 'name' => 'Sayap Ayam', 'category' => 'Ayam', 'price' => 7000, 'stock' => 45, 'description' => 'Sayap renyah, enak buat ngemil', 'image_url' => '/img/cat-sayap.png'],
+        ['id' => 'paha-atas', 'name' => 'Paha Atas', 'category' => 'Ayam', 'price' => 7000, 'stock' => 45, 'description' => 'Paha atas, dagingnya tebal', 'image_url' => '/img/cat-paha.png'],
+        ['id' => 'paha-bawah', 'name' => 'Paha Bawah', 'category' => 'Ayam', 'price' => 7000, 'stock' => 45, 'description' => 'Paha bawah, lebih gampang dimakan', 'image_url' => '/img/cat-paha.png'],
+        ['id' => 'ceker-ayam', 'name' => 'Ceker Ayam', 'category' => 'Ayam', 'price' => 500, 'stock' => 100, 'description' => 'Ceker empuk dengan bumbu gurih', 'image_url' => '/img/cat-ceker.png'],
+        ['id' => 'hati-ayam', 'name' => 'Hati Ayam', 'category' => 'Ayam', 'price' => 2000, 'stock' => 40, 'description' => 'Hati ayam gurih dan lembut', 'image_url' => '/img/cat-paha.png'],
+        ['id' => 'leher-ayam', 'name' => 'Leher Ayam', 'category' => 'Ayam', 'price' => 5000, 'stock' => 35, 'description' => 'Leher ayam crispy gurih', 'image_url' => '/img/cat-leher.png'],
+        ['id' => 'bakso-goreng-stick', 'name' => 'Bakso Goreng Stick', 'category' => 'Camilan', 'price' => 1000, 'stock' => 60, 'description' => 'Bakso goreng renyah dan gurih', 'image_url' => '/img/cat-bakso.png'],
     ];
 
     public $incrementing = false;
@@ -40,11 +42,15 @@ class Product extends Model
 
     public static function seedDefaults(): void
     {
-        foreach (self::DEFAULT_PRODUCTS as $data) {
-            static::firstOrCreate(
-                ['id' => $data['id']],
-                array_merge($data, ['active' => true])
-            );
+        try {
+            foreach (self::DEFAULT_PRODUCTS as $data) {
+                static::firstOrCreate(
+                    ['id' => $data['id']],
+                    array_merge($data, ['active' => true])
+                );
+            }
+        } catch (\Throwable) {
+            // Fallback gracefully if DB is unreachable
         }
     }
 }

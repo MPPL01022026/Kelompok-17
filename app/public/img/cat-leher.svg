@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="leherGrad" x1="20%" y1="15%" x2="85%" y2="85%">
+      <stop offset="0%" stop-color="#FBBF24"/>
+      <stop offset="50%" stop-color="#EA580C"/>
+      <stop offset="100%" stop-color="#7C2D12"/>
+    </linearGradient>
+  </defs>
+  <!-- Crispy Curved Chicken Neck / Leher -->
+  <path d="M30 26 C46 20, 58 34, 66 52 C74 68, 92 74, 96 88 C98 98, 82 104, 68 96 C50 86, 42 68, 32 50 C22 36, 20 30, 30 26 Z" fill="url(#leherGrad)"/>
+  <circle cx="44" cy="44" r="3" fill="#FDE68A" fill-opacity="0.5"/>
+  <circle cx="56" cy="62" r="3.2" fill="#7C2D12" fill-opacity="0.45"/>
+  <circle cx="72" cy="80" r="3" fill="#7C2D12" fill-opacity="0.45"/>
+  <circle cx="64" cy="70" r="2.5" fill="#FDE68A" fill-opacity="0.45"/>
+</svg>
+

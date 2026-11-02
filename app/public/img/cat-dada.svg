@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <radialGradient id="dadaGrad" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#F6AD55"/>
+      <stop offset="55%" stop-color="#EA580C"/>
+      <stop offset="100%" stop-color="#9A3412"/>
+    </radialGradient>
+  </defs>
+  <!-- Crispy Chicken Breast Cut -->
+  <path d="M22 72 C16 52, 34 26, 62 24 C88 22, 104 42, 100 66 C96 86, 74 96, 46 94 C30 92, 25 83, 22 72 Z" fill="url(#dadaGrad)"/>
+  <path d="M32 58 C42 40, 68 34, 84 46" stroke="#FDE68A" stroke-width="4" stroke-linecap="round" stroke-opacity="0.45"/>
+  <path d="M36 74 C52 66, 72 68, 86 76" stroke="#7C2D12" stroke-width="3" stroke-linecap="round" stroke-opacity="0.4"/>
+  <circle cx="52" cy="54" r="3" fill="#7C2D12" fill-opacity="0.4"/>
+  <circle cx="70" cy="58" r="2.5" fill="#7C2D12" fill-opacity="0.4"/>
+  <circle cx="60" cy="70" r="3" fill="#7C2D12" fill-opacity="0.4"/>
+  <circle cx="42" cy="66" r="2.2" fill="#FDE68A" fill-opacity="0.5"/>
+  <circle cx="78" cy="52" r="2.5" fill="#FDE68A" fill-opacity="0.5"/>
+</svg>
+

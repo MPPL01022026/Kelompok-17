@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <radialGradient id="drumMeat" cx="38%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#F6AD55"/>
+      <stop offset="55%" stop-color="#DD6B20"/>
+      <stop offset="100%" stop-color="#9C4221"/>
+    </radialGradient>
+    <linearGradient id="boneGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFDF9"/>
+      <stop offset="60%" stop-color="#F1E4D1"/>
+      <stop offset="100%" stop-color="#D4C2AA"/>
+    </linearGradient>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="4" stdDeviation="3" flood-color="#5C2B0E" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+  <g filter="url(#softShadow)">
+    <!-- Bone stem -->
+    <path d="M26 30 L48 52 L40 60 L18 38 Z" fill="url(#boneGrad)"/>
+    <circle cx="22" cy="27" r="7.5" fill="url(#boneGrad)"/>
+    <circle cx="16" cy="34" r="7" fill="url(#boneGrad)"/>
+    <!-- Crispy Drumstick Body -->
+    <path d="M44 43 C62 29, 92 38, 99 61 C105 81, 90 100, 69 99 C47 98, 32 76, 36 56 C37 50, 40 46, 44 43 Z" fill="url(#drumMeat)"/>
+    <!-- Highlight & Crispy Bumps -->
+    <ellipse cx="64" cy="56" rx="16" ry="9" transform="rotate(-20 64 56)" fill="#FBD38D" fill-opacity="0.35"/>
+    <circle cx="77" cy="66" r="3" fill="#7B341E" fill-opacity="0.45"/>
+    <circle cx="85" cy="73" r="2.3" fill="#7B341E" fill-opacity="0.45"/>
+    <circle cx="72" cy="77" r="2.6" fill="#7B341E" fill-opacity="0.45"/>
+    <circle cx="62" cy="70" r="2" fill="#7B341E" fill-opacity="0.35"/>
+    <circle cx="83" cy="58" r="2.2" fill="#7B341E" fill-opacity="0.35"/>
+  </g>
+</svg>
+
