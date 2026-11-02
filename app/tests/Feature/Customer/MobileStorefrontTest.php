@@ -3,6 +3,7 @@
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
 
 uses(RefreshDatabase::class);
 
@@ -29,12 +30,14 @@ it('renders the mobile catalog and filters menu products', function () {
 
 it('creates an order from server-validated catalog prices', function () {
     createMobileProducts();
+    $checkoutToken = (string) Str::uuid();
 
-    $response = $this->post(route('mobile.checkout'), [
+    $response = $this->withSession(['customer_checkout_token' => $checkoutToken])->post(route('mobile.checkout'), [
         'customer_name' => 'Rifki',
         'phone' => '081234567890',
         'note' => 'Ambil pukul 19.00',
         'payment_method' => 'transfer',
+        'checkout_token' => $checkoutToken,
         'items' => ['dada-ayam' => 2],
     ]);
 
@@ -42,17 +45,21 @@ it('creates an order from server-validated catalog prices', function () {
     $response->assertRedirect(route('mobile.payment', $order->id));
     $response->assertSessionHas('mobile_order_codes', fn (array $codes): bool => in_array($order->id, $codes, true));
     expect($order->total)->toBe(14000)
-        ->and($order->payment_method)->toBe('whatsapp');
+        ->and($order->payment_method)->toBe('whatsapp')
+        ->and($order->stock_reserved)->toBeTrue()
+        ->and(Product::query()->findOrFail('dada-ayam')->stock)->toBe(48);
 });
 
 it('rejects invalid checkout details without creating an order', function () {
     createMobileProducts();
+    $checkoutToken = (string) Str::uuid();
 
-    $this->from(route('mobile.cart'))
+    $this->withSession(['customer_checkout_token' => $checkoutToken])->from(route('mobile.cart'))
         ->post(route('mobile.checkout'), [
             'customer_name' => 'R',
             'phone' => '12345',
             'payment_method' => 'cod',
+            'checkout_token' => $checkoutToken,
             'items' => ['dada-ayam' => 1],
         ])
         ->assertRedirect(route('mobile.cart'))

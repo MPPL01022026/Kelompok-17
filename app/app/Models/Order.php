@@ -21,10 +21,12 @@ class Order extends Model
         'note',
         'payment_method',
         'status',
+        'stock_reserved',
     ];
 
     protected $casts = [
         'total' => 'integer',
+        'stock_reserved' => 'boolean',
     ];
 
     public function getParsedItemsAttribute(): array

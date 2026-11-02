@@ -9,16 +9,15 @@ use Illuminate\View\View;
 
 class WebCheckoutController extends MobileCheckoutController
 {
-    public function show(Request $request): View|RedirectResponse
+    public function show(Request $request): View
     {
         $products = $this->activeProducts();
         [$cart, $cartProducts, $cartCount, $cartTotal] = $this->cartData($request, $products);
+        $checkoutToken = $this->checkoutToken($request);
 
-        if ($cartProducts->isEmpty()) {
-            return redirect()->route('web.cart')->withErrors(['cart' => 'Keranjang masih kosong.']);
-        }
-
-        return view('customer.web.checkout', compact('cart', 'cartProducts', 'cartCount', 'cartTotal'));
+        return view('customer.web.checkout', compact(
+            'products', 'cart', 'cartProducts', 'cartCount', 'cartTotal', 'checkoutToken',
+        ));
     }
 
     public function store(StoreOrderRequest $request): RedirectResponse

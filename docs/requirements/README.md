@@ -11,7 +11,7 @@ Dokumentasi ini dirancang agar tim pengembang dan agen AI memiliki referensi yan
 | Dokumen | Deskripsi | Target Pembaca |
 | :--- | :--- | :--- |
 | 🏗️ [Arsitektur Sistem (`architecture.md`)](file:///d:/Project/2tugas/tugas-mppl/Kelompok-17/docs/requirements/architecture.md) | Penjelasan arsitektur sistem, modular HTTP controllers, Eloquent ORM models, dan struktur direktori. | Developer & AI Agent |
-| 🗄️ [Skema Basis Data (`database.md`)](file:///d:/Project/2tugas/tugas-mppl/Kelompok-17/docs/requirements/database.md) | Diagram relasi ERD, spesifikasi tabel (`products`, `orders`, `transactions`, `login_attempts`, `users`), dan tipe data. | Database Admin & Developer |
+| 🗄️ [Skema Basis Data (`database.md`)](file:///d:/Project/2tugas/tugas-mppl/Kelompok-17/docs/requirements/database.md) | Diagram relasi ERD, spesifikasi tabel, reservasi stok, dan persyaratan penanganan race condition saat checkout. | Database Admin & Developer |
 | 📐 [Standar & Konvensi Koding (`standards-and-conventions.md`)](file:///d:/Project/2tugas/tugas-mppl/Kelompok-17/docs/requirements/standards-and-conventions.md) | Pedoman validasi error UI, standar penamaan file, serta spesifikasi token warna (*Design System* Light/Dark & Spice Level). | UI/UX & Developer |
 | 📦 [Fitur & Modul Sistem (`features-and-modules.md`)](file:///d:/Project/2tugas/tugas-mppl/Kelompok-17/docs/requirements/features-and-modules.md) | Rincian modul utama: POS/Kasir, Katalog Menu, Stok & Inventaris, Laporan Omzet, dan Manajemen Akun. | Product Owner & Developer |
 

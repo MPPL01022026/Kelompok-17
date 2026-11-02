@@ -1,6 +1,20 @@
-# 🗄️ Skema Basis Data (Database Schema) Sistem Ayamo — v2
+# 🗄️ Skema Basis Data (Database Schema) Sistem Ayamo — v2.1
 
 Dokumen ini adalah revisi skema basis data Ayamo untuk alur baru: **pelanggan tanpa login**, pembayaran **Tunai / Transfer (Bank & QRIS statis)** yang diverifikasi lewat WhatsApp, dan **aplikasi admin terpisah** (lihat penjualan + CRUD menu) yang memakai database yang sama.
+
+> **Pembaruan 2 November 2026:** skema pesanan memiliki penanda `stock_reserved` untuk membedakan pesanan yang stoknya sudah dialokasikan secara atomik dengan pesanan lama yang belum memakai mekanisme reservasi. Kolom ini sudah tersedia melalui migration `2026_11_02_052334_add_stock_reserved_to_orders_table.php`.
+
+### Status implementasi skema
+
+Dokumen ini memuat **skema target v2.1** sekaligus persyaratan integritas yang wajib dipertahankan. Implementasi aktif saat pembaruan ini masih berada pada tahap transisi:
+
+| Area | Implementasi aktif | Target v2.1 |
+| :--- | :--- | :--- |
+| Detail item pesanan | `orders.items` dalam JSON | Tabel ter-normalisasi `order_items` |
+| Rekap penjualan | Tabel `transactions` masih digunakan | Status pembayaran terintegrasi pada `orders` |
+| Reservasi stok | `orders.stock_reserved` melalui migration baru | Tetap dipertahankan sebagai penanda alokasi stok |
+
+Bagian target yang belum memiliki migration tidak boleh dianggap sudah tersedia di database deployment.
 
 ---
 
@@ -45,6 +59,7 @@ erDiagram
         timestamp paid_at "Waktu pembayaran terverifikasi"
         bigint verified_by FK "users.id admin pemverifikasi"
         string status "pending / processing / ready / completed / cancelled"
+        boolean stock_reserved "Stok sudah dialokasikan, default false"
         string cancel_reason "Alasan batal"
         timestamp expires_at "Batas waktu bayar transfer"
         timestamp created_at
@@ -147,6 +162,7 @@ Satu baris per pesanan dari pelanggan (online) atau diinput admin (manual/walk-i
 | `paid_at` | `TIMESTAMP` | Yes | Saat admin memverifikasi / kasir menerima uang |
 | `verified_by` | `BIGINT UNSIGNED` | Yes | FK `users.id` (admin yang memverifikasi) |
 | `status` | `VARCHAR(20)` | No | `pending` → `processing` → `ready` → `completed`, atau `cancelled` |
+| `stock_reserved` | `BOOLEAN` | No | `true` jika seluruh stok item sudah dialokasikan; default `false` untuk kompatibilitas pesanan lama |
 | `cancel_reason` | `VARCHAR(255)` | Yes | Alasan pembatalan |
 | `expires_at` | `TIMESTAMP` | Yes | Batas bayar untuk transfer; lewat batas → otomatis `cancelled` |
 | `created_at` / `updated_at` | `TIMESTAMP` | Yes | Audit waktu |
@@ -211,6 +227,7 @@ Key yang dipakai: `store_open`, `open_hours`, `address`, `whatsapp_number`, `ban
 | `status`: pending/confirmed/cancelled | `status` + `payment_status` terpisah | Alur baru punya tahap diproses & siap diambil; bayar dan masak itu dua hal berbeda |
 | `payment_method`: cod/whatsapp/qris | `payment_method` (cash/transfer) + `payment_channel` (bank/qris) | Sesuai desain: Transfer punya sub-pilihan Bank atau QRIS |
 | — | `code`, `tracking_token`, `unique_code`, `expires_at` | Lacak pesanan tanpa login, cocokkan transfer, lepas stok pesanan kedaluwarsa |
+| — | `orders.stock_reserved` | Mencegah stok dikurangi dua kali dan menandai pesanan lama yang masih perlu alokasi stok saat dikonfirmasi |
 | — | `store_settings` | Rekening/QRIS/WA bisa diubah admin |
 | `products.description`, `image_url` NOT NULL | Nullable | Menu baru bisa disimpan dulu sebelum fotonya ada |
 | `login_attempts` untuk "Username / IP Pelanggan" | Khusus admin | Pelanggan tidak login |
@@ -220,14 +237,45 @@ Key yang dipakai: `store_open`, `open_hours`, `address`, `whatsapp_number`, `ban
 ## 4. Catatan Implementasi
 
 1. **Kode order jangan dipakai sebagai satu-satunya kunci akses.** Kode 4 digit mudah ditebak, dan di halaman status ada nama dan nomor WA. Link status pelanggan pakai `tracking_token` (acak), atau minta 4 digit terakhir nomor WA untuk verifikasi.
-2. **Stok dikurangi saat order dibuat, di dalam DB transaction**, lalu dikembalikan kalau `cancelled` atau `expires_at` lewat. Tanpa ini, dua pelanggan bisa memesan stok terakhir bersamaan.
+2. **Stok direservasi saat order dibuat, di dalam DB transaction.** Baris produk dikunci dengan `SELECT ... FOR UPDATE`, diperiksa ulang, lalu stok dikurangi dan `orders.stock_reserved` diubah menjadi `true` dalam transaksi yang sama. Tanpa ini, dua pelanggan bisa memesan stok terakhir secara bersamaan.
 3. **Total transfer = `subtotal + unique_code`.** Admin mencocokkan mutasi bank/QRIS dengan nominal unik ini, bukan dengan nama.
 4. **Riwayat di aplikasi pelanggan** disimpan di perangkat (localStorage) dan dicocokkan ke server lewat `tracking_token`. Ganti HP berarti riwayat hilang; itu konsekuensi desain tanpa login.
 5. **Laporan penjualan:** omzet per hari = `SUM(total)` dari `orders` dengan `payment_status = 'paid'` dikelompokkan per `DATE(paid_at)`. Menu terlaris = `SUM(quantity)` dari `order_items` yang join ke order berstatus `paid`.
 
 ---
 
-## 5. Eloquent Model Mapping
+## 5. Persyaratan Integritas Stok dan Race Condition
+
+Mekanisme berikut wajib berlaku untuk checkout **mobile dan web**:
+
+1. Keranjang di sisi pelanggan boleh disimpan secara lokal dan baru disinkronkan ketika pelanggan membuka keranjang atau checkout. Nilai harga, status produk, dan stok dari browser **tidak boleh dipercaya** sebagai sumber final.
+2. Setiap checkout membawa `checkout_token` unik. Token yang sama tidak boleh menghasilkan lebih dari satu pesanan, termasuk saat tombol checkout ditekan berulang atau dua request tiba hampir bersamaan.
+3. Proses checkout wajib memakai database transaction dan `lockForUpdate()` pada seluruh produk yang dipesan. Produk dikunci dalam urutan ID yang konsisten untuk mengurangi risiko deadlock.
+4. Setelah lock diperoleh, server wajib membaca ulang produk aktif, harga, dan stok. Pesanan ditolak apabila satu produk hilang, nonaktif, atau stoknya kurang.
+5. Pengurangan `products.stock`, pembuatan `orders`, dan perubahan `orders.stock_reserved = true` harus berhasil atau gagal sebagai satu unit atomik.
+6. Konfirmasi admin hanya mengurangi stok apabila `stock_reserved = false`. Pesanan baru yang sudah mereservasi stok saat checkout tidak boleh mengurangi stok untuk kedua kalinya.
+7. Pesanan lama memiliki nilai default `stock_reserved = false`. Saat dikonfirmasi, sistem menjalankan alokasi stok dengan lock dan kemudian mengubah nilainya menjadi `true`.
+8. Saat alur pembatalan atau kedaluwarsa diterapkan, pelepasan stok hanya dilakukan untuk pesanan dengan `stock_reserved = true`, kemudian flag dikembalikan ke `false` dalam transaction yang sama.
+
+### Migration
+
+```text
+database/migrations/2026_11_02_052334_add_stock_reserved_to_orders_table.php
+```
+
+Migration menambahkan kolom berikut:
+
+```sql
+stock_reserved BOOLEAN NOT NULL DEFAULT FALSE
+```
+
+Migration wajib dijalankan pada setiap environment sebelum versi aplikasi dengan mekanisme reservasi stok dipublikasikan:
+
+```bash
+php artisan migrate
+```
+
+## 6. Eloquent Model Mapping
 
 | Tabel | Eloquent Model |
 | :--- | :--- |

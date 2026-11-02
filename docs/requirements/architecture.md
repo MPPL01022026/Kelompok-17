@@ -30,10 +30,11 @@ graph TD
    - Menggunakan PHP 8.4+ dengan fitur tipe data ketat (*strict types* & *constructor property promotion*).
 2. **Modular Controllers**
    - Pemisahan tanggung jawab controller per domain fungsional:
-     - `ShopController`: Katalog etalase publik, session cart, dan checkout pesanan.
+     - `Customer\Mobile*Controller`: katalog, keranjang, checkout, pembayaran, status, dan riwayat untuk tampilan mobile.
+     - `Customer\Web*Controller`: controller modular untuk alur customer web dengan aturan bisnis bersama dari controller mobile/storefront.
      - `Admin\AuthController`: Otentikasi login/logout admin & proteksi brute-force.
      - `Admin\DashboardController`: Metrik omzet penjualan, grafik analitik, produk terlaris.
-     - `Admin\OrderController`: Konfirmasi pesanan & alokasi stok otomatis.
+     - `Admin\OrderController`: Konfirmasi pesanan tanpa mengurangi ulang stok yang sudah direservasi saat checkout.
      - `Admin\ProductController`: CRUD katalog produk & pengarsipan.
      - `Admin\TransactionController`: Pencatatan transaksi kasir manual langsung di dashboard.
 3. **Eloquent ORM Models**
@@ -62,8 +63,11 @@ app/
 │   │   │   │   ├── OrderController.php         # Konfirmasi pesanan & update stok
 │   │   │   │   ├── ProductController.php       # Simpan & arsipkan produk
 │   │   │   │   └── TransactionController.php   # Catat transaksi kasir manual
-│   │   │   ├── Controller.php                  # Base controller abstrak
-│   │   │   └── ShopController.php              # Etalase, keranjang, & checkout
+│   │   │   ├── Customer/
+│   │   │   │   ├── MobileStorefrontController.php # Basis aturan katalog & keranjang
+│   │   │   │   ├── Mobile*Controller.php       # Alur customer mobile
+│   │   │   │   └── Web*Controller.php          # Alur customer web
+│   │   │   └── Controller.php                  # Base controller abstrak
 │   │   └── Requests/                           # Request validation
 │   ├── Models/
 │   │   ├── LoginAttempt.php                    # Model pelacak login lockout
@@ -85,7 +89,7 @@ app/
 │       ├── admin/                              # View panel admin (dashboard, login, forms)
 │       ├── components/                         # Reusable Blade components (<x-input-error>, dll.)
 │       ├── layouts/                            # Layout template (app, guest)
-│       └── shop.blade.php                      # Halaman etalase toko & keranjang
+│       └── customer/                           # View customer web dan mobile
 └── routes/
     └── web.php                                 # Routing publik & middleware admin
 ```
@@ -95,13 +99,14 @@ app/
 ## 3. Pola Interaksi Data & State Management
 
 ### A. Alur Pemesanan Online (Customer Journey)
-1. **Etalase Menu**: Pelanggan memilih menu dari `ShopController@shop`.
-2. **Keranjang Belanja**: Disimpan dalam session `cart` melalui `ShopController@addToCart` dan `updateCart`.
-3. **Checkout Transaksi**: `ShopController@checkout` memvalidasi ketersediaan stok menggunakan `DB::transaction()` dan `lockForUpdate()`, lalu membuat entitas `Order`.
+1. **Etalase Menu**: Pelanggan memilih menu melalui `WebCatalogController` atau `MobileCatalogController`.
+2. **Keranjang Lokal**: Penambahan item disimpan pada `localStorage` (`ayamo_cart_v1`) sehingga klik **Tambah** tidak mengirim request. Keranjang disinkronkan ke session server saat halaman keranjang dibuka; endpoint server tetap tersedia sebagai fallback ketika JavaScript tidak aktif.
+3. **Checkout Transaksi**: `WebCheckoutController` meneruskan proses ke mekanisme bersama `MobileCheckoutController`. Server memvalidasi `checkout_token`, mengunci request duplikat, dan memproses pesanan dalam `DB::transaction()`.
+4. **Reservasi Stok**: Semua produk dikunci menggunakan `lockForUpdate()` dalam urutan ID yang konsisten. Stok diperiksa ulang dan dikurangi sebelum order dibuat dengan `stock_reserved = true`.
 
 ### B. Alur Manajemen Admin
 1. **Otentikasi & Keamanan**: Admin login diverifikasi terhadap hash password dengan batasan percobaan gagal (maks. 5 kali sebelum lockout 15 menit).
-2. **Konfirmasi Pesanan**: `Admin\OrderController@confirm` mengunci record order, mengurangi stok pada model `Product`, dan mencatat record baru pada `Transaction`.
+2. **Konfirmasi Pesanan**: `Admin\OrderController@confirm` mengunci record order dan mencatat `Transaction`. Stok hanya dikurangi untuk pesanan lama dengan `stock_reserved = false`; pesanan baru tidak dikurangi dua kali.
 3. **Penjualan Kasir Manual**: `Admin\TransactionController@manualSale` mencatat penjualan langsung dan memotong stok seketika dalam satu transaksi atomik.
 
 ---
@@ -109,5 +114,6 @@ app/
 ## 4. Keamanan & Performa
 
 1. **Proteksi Akses**: Menggunakan middleware session admin khusus (`admin.session`) dan pembatasan throttle pada rute login (`throttle:10,1`).
-2. **Integritas Konkurensi Stok**: Menggunakan *Pessimistic Locking* (`lockForUpdate()`) di dalam database transaction agar tidak terjadi *overselling* saat banyak pesanan bersamaan.
-3. **CSRF & XSS Protection**: Seluruh form web dilindungi token CSRF otomatis (`@csrf`) dan Blade escaping.
+2. **Integritas Konkurensi Stok**: Menggunakan *pessimistic locking* (`lockForUpdate()`) di dalam database transaction, urutan lock produk yang konsisten, dan flag `orders.stock_reserved` agar tidak terjadi *overselling* atau pengurangan stok ganda.
+3. **Idempotensi Checkout**: Setiap form checkout memiliki token UUID. Cache lock mengoordinasikan request dengan token yang sama dan token yang telah dipakai tidak dapat membuat order kedua.
+4. **CSRF & XSS Protection**: Seluruh form web dilindungi token CSRF otomatis (`@csrf`) dan Blade escaping.

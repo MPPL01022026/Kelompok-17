@@ -38,7 +38,14 @@ mindmap
 
 ## 2. Rincian Modul
 
-### A. Modul Kasir & Point of Sale (POS)
+### A. Modul Customer Ordering (Web & Mobile)
+
+- **Keranjang Lokal Tanpa Request per Klik**: Penambahan produk disimpan di perangkat dan tidak melakukan fetch sampai pelanggan membuka keranjang atau melanjutkan ke checkout.
+- **Sinkronisasi Terukur**: Isi keranjang dikirim sekaligus ke session server. Server tetap menghitung harga dan memeriksa status produk sebagai sumber kebenaran final.
+- **Pencegahan Pesanan Ganda**: Checkout menggunakan token unik untuk menahan double-click dan request bersamaan.
+- **Reservasi Stok Atomik**: Stok diperiksa serta dialokasikan dalam database transaction dengan row lock untuk mencegah overselling pada web maupun mobile.
+
+### B. Modul Kasir & Point of Sale (POS)
 Dirancang untuk kecepatan operasional di meja kasir dengan antarmuka yang bersih dan responsif.
 - **Pencarian & Filter Cepat**: Filter berdasarkan kategori menu (Paket Ayam Geprek, Ala Carte, Minuman, Ekstra Sambal).
 - **Kustomisasi Pesanan**: Pemilihan level kepedasan (Level 0 - 10), pilihan sambal (Sambal Bawang, Sambal Matah, Sambal Ijo), dan add-ons (Nasi, Telur, Tahu/Tempe).
@@ -47,23 +54,24 @@ Dirancang untuk kecepatan operasional di meja kasir dengan antarmuka yang bersih
   - Dukungan non-tunai (QRIS / Transfer Bank).
 - **Cetak Struk**: Format cetak struk ramah printer thermal (58mm / 80mm).
 
-### B. Modul Menu & Kategori
+### C. Modul Menu & Kategori
 - **Manajemen Kategori**: Pengelompokan jenis produk.
 - **Katalog Produk**: Nama, foto/thumbnail, deskripsi, harga jual, dan status stok (Tersedia / Habis).
 - **Penetapan HPP (Harga Pokok Penjualan)**: Untuk memantau margin keuntungan per produk.
 
-### C. Modul Stok & Bahan Baku (Inventory)
+### D. Modul Stok & Bahan Baku (Inventory)
 - **Master Bahan Baku**: Pencatatan bahan mentah (Ayam potong kg/ekor, Beras kg, Cabai rawit kg, Minyak goreng liter, Tepung, dsb.).
 - **Stok Masuk (*Stock In*)**: Pencatatan pembelian bahan dari supplier beserta biayanya.
 - **Pengurangan Stok Otomatis**: Integrasi pesanan kasir dengan estimasi pengurangan bahan baku utama.
+- **Status Reservasi Pesanan**: Setiap order mencatat apakah stok sudah dialokasikan agar konfirmasi admin tidak memotong stok dua kali.
 - **Notifikasi Stok Menipis**: Peringatan visual jika stok berada di bawah batas minimum (*threshold*).
 
-### D. Modul Laporan & Analitik
+### E. Modul Laporan & Analitik
 - **Laporan Transaksi Harian & Bulanan**: Grafik tren omzet harian, jumlah transaksi, dan rata-rata belanja (*average order value*).
 - **Analisis Menu Terlaris (*Best Seller*)**: Identifikasi menu paling disukai konsumen untuk strategi promosi.
 - **Laporan Kas Laci (Shift Kasir)**: Rekonsiliasi uang masuk awal shift vs akhir shift kasir.
 
-### E. Modul Manajemen Akun & Hak Akses
+### F. Modul Manajemen Akun & Hak Akses
 - **Role Berjenjang**:
   - `Owner / Pemilik`: Akses penuh ke seluruh laporan finansial, analitik, dan pengaturan sistem.
   - `Admin / Manajer Gerai`: Akses ke menu, inventaris, dan operasional harian.

@@ -15,9 +15,10 @@ class MobileCartController extends MobileStorefrontController
         $products = $this->activeProducts();
         [$cart, $cartProducts, $cartCount, $cartTotal] = $this->cartData($request, $products);
         $settings = Settings::getMap();
+        $checkoutToken = $this->checkoutToken($request);
 
         return view('customer.mobile.cart', compact(
-            'products', 'cart', 'cartProducts', 'cartCount', 'cartTotal', 'settings',
+            'products', 'cart', 'cartProducts', 'cartCount', 'cartTotal', 'settings', 'checkoutToken',
         ));
     }
 

@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 abstract class MobileStorefrontController extends Controller
 {
@@ -63,6 +64,18 @@ abstract class MobileStorefrontController extends Controller
         }
 
         return [$cart, $cartProducts, $cartCount, $cartTotal];
+    }
+
+    protected function checkoutToken(Request $request): string
+    {
+        $token = $request->session()->get('customer_checkout_token');
+
+        if (! is_string($token) || ! Str::isUuid($token)) {
+            $token = (string) Str::uuid();
+            $request->session()->put('customer_checkout_token', $token);
+        }
+
+        return $token;
     }
 
     protected function ownedOrder(Request $request, string $code): Order

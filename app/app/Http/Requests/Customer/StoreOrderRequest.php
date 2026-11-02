@@ -18,6 +18,7 @@ class StoreOrderRequest extends FormRequest
             'phone' => ['required', 'string', 'regex:/^(\+62|62|0)8[1-9][0-9]{6,12}$/'],
             'note' => ['nullable', 'string', 'max:500'],
             'payment_method' => ['required', 'in:cod,whatsapp,tunai,transfer'],
+            'checkout_token' => ['required', 'uuid'],
             'items' => ['required', 'array', 'min:1', 'max:30'],
             'items.*' => ['integer', 'min:1', 'max:100'],
         ];
@@ -30,6 +31,7 @@ class StoreOrderRequest extends FormRequest
             'customer_name.min' => 'Nama pemesan minimal 2 karakter.',
             'phone.required' => 'Nomor WhatsApp wajib diisi.',
             'phone.regex' => 'Format nomor WhatsApp tidak valid (gunakan 08xx atau 628xx).',
+            'checkout_token.required' => 'Sesi checkout telah berakhir. Muat ulang halaman lalu coba lagi.',
             'items.required' => 'Keranjang masih kosong.',
             'items.min' => 'Keranjang masih kosong.',
             'items.*.min' => 'Jumlah item minimal 1.',
