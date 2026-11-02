@@ -54,6 +54,7 @@
             {{-- Checkout Form (Only sends order when user clicks Buat Pesanan) --}}
             <form method="post" action="{{ route('mobile.checkout') }}" id="mobile-checkout-form" novalidate>
                 @csrf
+                <input type="hidden" name="checkout_token" value="{{ $checkoutToken }}">
                 <div id="checkout-hidden-items"></div>
 
                 {{-- Card 2: Data Pesanan --}}
