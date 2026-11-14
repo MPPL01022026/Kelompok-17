@@ -14,6 +14,8 @@ abstract class MobileStorefrontController extends Controller
 {
     protected function activeProducts(): Collection
     {
+        Product::seedDefaults();
+
         try {
             $products = Product::query()->where('active', true)->get();
 
@@ -24,7 +26,10 @@ abstract class MobileStorefrontController extends Controller
                 return $products
                     ->each(function (Product $product) use ($defaultImages): void {
                         if (blank($product->image_url) || str_ends_with($product->image_url, '.svg')) {
-                            $product->image_url = $defaultImages->get($product->id, $product->image_url);
+                            $categoryFallback = str_contains(mb_strtolower((string) $product->category), 'camilan')
+                                ? '/img/cat-bakso.png'
+                                : '/img/cat-dada.png';
+                            $product->image_url = $defaultImages->get($product->id, $categoryFallback);
                         }
                     })
                     ->sortBy(fn (Product $product): int => $priority->get($product->id, PHP_INT_MAX))
@@ -115,5 +120,51 @@ abstract class MobileStorefrontController extends Controller
 
         $request->session()->put('mobile_orders_data', $sessionOrders);
         $request->session()->put('mobile_order_codes', array_values(array_unique($knownOrderCodes)));
+    }
+
+    protected function normalizePhoneDigits(string $phone): string
+    {
+        $digits = preg_replace('/\D+/', '', $phone) ?? '';
+        if (str_starts_with($digits, '0')) {
+            return '62' . substr($digits, 1);
+        }
+
+        return $digits;
+    }
+
+    protected function handleTrackOrderQuery(Request $request): void
+    {
+        if (! $request->filled('code') && ! $request->filled('phone')) {
+            return;
+        }
+
+        $code = strtoupper(trim((string) $request->query('code', '')));
+        $phoneDigits = $this->normalizePhoneDigits((string) $request->query('phone', ''));
+
+        if ($code === '' || $phoneDigits === '') {
+            $request->session()->now('error', 'Masukkan kode pesanan dan nomor WhatsApp untuk melacak pesanan.');
+
+            return;
+        }
+
+        try {
+            $order = Order::query()->find($code);
+        } catch (QueryException) {
+            $order = null;
+        }
+
+        if ($order === null) {
+            $sessionOrder = collect($request->session()->get('mobile_orders_data', []))->get($code);
+            $order = is_array($sessionOrder) ? new Order($sessionOrder) : null;
+        }
+
+        if ($order === null || ! hash_equals($this->normalizePhoneDigits((string) $order->phone), $phoneDigits)) {
+            $request->session()->now('error', 'Kode pesanan dan nomor WhatsApp tidak cocok atau tidak ditemukan.');
+
+            return;
+        }
+
+        $this->rememberOrder($request, $order->toArray());
+        $request->session()->now('status', "Pesanan {$order->id} ditemukan dan ditampilkan di riwayat.");
     }
 }

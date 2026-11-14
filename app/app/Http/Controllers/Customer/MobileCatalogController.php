@@ -14,7 +14,7 @@ class MobileCatalogController extends MobileStorefrontController
         $products = $this->activeProducts();
         [$cart, $cartProducts, $cartCount, $cartTotal] = $this->cartData($request, $products);
         $settings = Settings::getMap();
-        $favoriteIds = ['dada-ayam', 'paha-atas', 'sayap-ayam', 'paha-bawah', 'ceker-ayam', 'bakso-goreng-stick'];
+        $favoriteIds = ['dada-ayam', 'paha-atas', 'sayap-ayam', 'paha-bawah', 'ceker-ayam', 'bakso-goreng'];
         $favorites = $products->whereIn('id', $favoriteIds)->values();
 
         if ($favorites->isEmpty()) {

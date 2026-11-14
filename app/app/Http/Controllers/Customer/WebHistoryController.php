@@ -12,6 +12,8 @@ class WebHistoryController extends MobileStorefrontController
 {
     public function __invoke(Request $request): View
     {
+        $this->handleTrackOrderQuery($request);
+
         [, , $cartCount] = $this->cartData($request);
         $knownOrderCodes = array_slice($request->session()->get('mobile_order_codes', []), 0, 30);
         $sessionOrders = collect($request->session()->get('mobile_orders_data', []));

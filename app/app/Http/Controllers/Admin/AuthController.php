@@ -27,11 +27,19 @@ class AuthController extends Controller
         $attempt = LoginAttempt::find($identifier);
 
         if ($attempt?->locked_until && now()->lt($attempt->locked_until)) {
-            return back()->withErrors(['login' => 'Terlalu banyak percobaan. Coba lagi beberapa menit.']);
+            $message = 'Terlalu banyak percobaan. Coba lagi beberapa menit.';
+
+            return back()
+                ->withInput($request->only('username'))
+                ->with('error', $message)
+                ->withErrors(['login' => $message]);
         }
 
-        $passwordHash = (string) env('ADMIN_PASSWORD_HASH');
-        if ($identifier !== env('ADMIN_USERNAME') || $passwordHash === '' || !Hash::check($data['password'], $passwordHash)) {
+        $expectedUsername = (string) config('services.ayamo.admin_username', 'admin');
+        $passwordHash = (string) config('services.ayamo.admin_password_hash', '');
+
+        $usernameMatches = $expectedUsername !== '' && hash_equals((string) $expectedUsername, (string) $identifier);
+        if (!$usernameMatches || $passwordHash === '' || !Hash::check($data['password'], $passwordHash)) {
             $attempts = ($attempt->attempts ?? 0) + 1;
             LoginAttempt::updateOrCreate(
                 ['identifier' => $identifier],
@@ -41,7 +49,12 @@ class AuthController extends Controller
                 ]
             );
 
-            return back()->withErrors(['login' => 'Username atau password salah.']);
+            $message = 'Username atau password salah.';
+
+            return back()
+                ->withInput($request->only('username'))
+                ->with('error', $message)
+                ->withErrors(['login' => $message]);
         }
 
         LoginAttempt::where('identifier', $identifier)->delete();
@@ -54,7 +67,8 @@ class AuthController extends Controller
     public function logout(Request $request): RedirectResponse
     {
         $request->session()->forget('admin');
-        $request->session()->regenerate();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return redirect('/admin/login');
     }

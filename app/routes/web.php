@@ -19,7 +19,7 @@ use App\Http\Controllers\Customer\WebOrderController;
 use App\Http\Controllers\Customer\WebPaymentController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('throttle:60,1')->group(function () {
+Route::middleware('throttle:60,1,web_storefront')->group(function () {
     Route::get('/', [WebCatalogController::class, 'home'])->name('web.home');
     Route::get('/menu', [WebCatalogController::class, 'menu'])->name('web.menu');
     Route::get('/cart', [WebCartController::class, 'show'])->name('web.cart');
@@ -35,20 +35,27 @@ Route::middleware('throttle:60,1')->group(function () {
 });
 
 Route::get('/admin/login', [AdminAuthController::class, 'login']);
-Route::post('/admin/login', [AdminAuthController::class, 'authenticate'])->middleware('throttle:10,1');
+Route::post('/admin/login', [AdminAuthController::class, 'authenticate'])->middleware('throttle:10,1,admin_login');
 
-Route::middleware('admin.session')->group(function () {
+Route::middleware(['admin.session', 'throttle:120,1,admin_actions'])->group(function () {
     Route::get('/admin', [AdminDashboardController::class, 'index']);
     Route::post('/admin/logout', [AdminAuthController::class, 'logout']);
     Route::post('/admin/orders/{id}/confirm', [AdminOrderController::class, 'confirm']);
+    Route::post('/admin/orders/{id}/status', [AdminOrderController::class, 'updateStatus']);
     Route::post('/admin/products', [AdminProductController::class, 'store']);
     Route::post('/admin/products/{id}', [AdminProductController::class, 'store']);
     Route::post('/admin/products/{id}/delete', [AdminProductController::class, 'destroy']);
+    Route::post('/admin/products/{id}/restore', [AdminProductController::class, 'restore']);
+    Route::post('/admin/products/{id}/stock', [AdminProductController::class, 'adjustStock']);
     Route::post('/admin/transactions', [AdminTransactionController::class, 'manualSale']);
+    Route::get('/admin/reports/export', [AdminDashboardController::class, 'exportReport'])->name('admin.reports.export');
+    Route::post('/admin/settings', [AdminDashboardController::class, 'updateSettings']);
+    Route::post('/admin/settings/kv', [AdminDashboardController::class, 'upsertSettingKey'])->name('admin.settings.kv');
+    Route::post('/admin/settings/{key}/delete', [AdminDashboardController::class, 'destroySettingKey'])->name('admin.settings.delete');
 });
 
 // Mobile Web Routes
-Route::prefix('mobile')->middleware('throttle:60,1')->group(function () {
+Route::prefix('mobile')->middleware('throttle:60,1,mobile_storefront')->group(function () {
     Route::get('/', [MobileCatalogController::class, 'home'])->name('mobile.home');
     Route::get('/splash', [MobileCatalogController::class, 'splash'])->name('mobile.splash');
     Route::get('/menu', [MobileCatalogController::class, 'menu'])->name('mobile.menu');

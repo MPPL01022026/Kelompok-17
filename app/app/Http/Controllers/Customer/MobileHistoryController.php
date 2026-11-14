@@ -12,6 +12,8 @@ class MobileHistoryController extends MobileStorefrontController
 {
     public function __invoke(Request $request): View
     {
+        $this->handleTrackOrderQuery($request);
+
         $products = $this->activeProducts();
         [$cart, $cartProducts, $cartCount, $cartTotal] = $this->cartData($request, $products);
         $knownOrderCodes = array_slice($request->session()->get('mobile_order_codes', []), 0, 30);

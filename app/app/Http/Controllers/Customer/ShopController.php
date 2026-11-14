@@ -31,7 +31,7 @@ class ShopController extends Controller
                     'ceker-ayam' => 5,
                     'hati-ayam' => 6,
                     'leher-ayam' => 7,
-                    'bakso-goreng-stick' => 8,
+                    'bakso-goreng' => 8,
                 ];
 
                 $iconMap = collect(Product::DEFAULT_PRODUCTS)->pluck('image_url', 'id')->all();
@@ -79,7 +79,7 @@ class ShopController extends Controller
                         'phone' => '0895346200506',
                         'items' => json_encode([
                             ['product_id' => 'dada-ayam', 'name' => 'Dada Ayam', 'quantity' => 1, 'price' => 7000],
-                            ['product_id' => 'bakso-goreng-stick', 'name' => 'Bakso Goreng Stick', 'quantity' => 1, 'price' => 1000],
+                            ['product_id' => 'bakso-goreng', 'name' => 'Bakso Goreng', 'quantity' => 1, 'price' => 1000],
                         ]),
                         'total' => 8000,
                         'note' => '',
@@ -134,7 +134,7 @@ class ShopController extends Controller
                 'phone' => '0895346200506',
                 'items' => json_encode([
                     ['product_id' => 'dada-ayam', 'name' => 'Dada Ayam', 'quantity' => 1, 'price' => 7000],
-                    ['product_id' => 'bakso-goreng-stick', 'name' => 'Bakso Goreng Stick', 'quantity' => 1, 'price' => 1000],
+                    ['product_id' => 'bakso-goreng', 'name' => 'Bakso Goreng', 'quantity' => 1, 'price' => 1000],
                 ]),
                 'total' => 8000,
                 'note' => '',
@@ -172,7 +172,7 @@ class ShopController extends Controller
         [$cart, $cartProducts, $cartCount, $cartTotal] = $this->getCartData($request, $products);
         $settings = Settings::getMap();
 
-        $favorites = $products->whereIn('id', ['dada-ayam', 'paha-atas', 'sayap-ayam', 'paha-bawah', 'ceker-ayam', 'bakso-goreng-stick'])->values();
+        $favorites = $products->whereIn('id', ['dada-ayam', 'paha-atas', 'sayap-ayam', 'paha-bawah', 'ceker-ayam', 'bakso-goreng'])->values();
         if ($favorites->isEmpty()) {
             $favorites = $products->take(6);
         }

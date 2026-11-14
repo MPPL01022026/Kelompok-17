@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Requests\Customer\StoreOrderRequest;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Settings;
 use Illuminate\Contracts\Cache\LockTimeoutException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\RedirectResponse;
@@ -22,6 +23,15 @@ class MobileCheckoutController extends MobileStorefrontController
         if (! is_string($expectedToken) || ! hash_equals($expectedToken, $data['checkout_token'])) {
             throw ValidationException::withMessages([
                 'checkout_token' => 'Sesi checkout telah berubah. Muat ulang halaman lalu coba lagi.',
+            ]);
+        }
+
+        $storeStatus = Settings::getStoreStatus();
+        if (! $storeStatus['is_open']) {
+            throw ValidationException::withMessages([
+                'store' => $storeStatus['reason'] !== ''
+                    ? 'Toko sedang tutup: ' . $storeStatus['reason']
+                    : 'Maaf, toko sedang tutup sementara dan belum menerima pesanan.',
             ]);
         }
 
@@ -132,10 +142,6 @@ class MobileCheckoutController extends MobileStorefrontController
      */
     private function generateOrderCode(array $knownOrderCodes): string
     {
-        do {
-            $code = Order::generateCode();
-        } while (in_array($code, $knownOrderCodes, true));
-
-        return $code;
+        return Order::generateCode($knownOrderCodes);
     }
 }

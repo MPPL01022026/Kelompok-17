@@ -13,7 +13,7 @@ class WebCatalogController extends MobileStorefrontController
     {
         $products = $this->activeProducts();
         [, , $cartCount] = $this->cartData($request, $products);
-        $favorites = $products->whereIn('id', ['dada-ayam', 'paha-atas', 'sayap-ayam', 'bakso-goreng-stick'])->values();
+        $favorites = $products->whereIn('id', ['dada-ayam', 'paha-atas', 'sayap-ayam', 'bakso-goreng'])->values();
         $settings = Settings::getMap();
 
         return view('customer.web.home', compact('products', 'favorites', 'cartCount', 'settings'));

@@ -12,12 +12,12 @@ class Product extends Model
     public const DEFAULT_PRODUCTS = [
         ['id' => 'dada-ayam', 'name' => 'Dada Ayam', 'category' => 'Ayam', 'price' => 7000, 'stock' => 50, 'description' => 'Dada ayam crispy, tebal dan juicy', 'image_url' => '/img/cat-dada.png'],
         ['id' => 'sayap-ayam', 'name' => 'Sayap Ayam', 'category' => 'Ayam', 'price' => 7000, 'stock' => 45, 'description' => 'Sayap renyah, enak buat ngemil', 'image_url' => '/img/cat-sayap.png'],
-        ['id' => 'paha-atas', 'name' => 'Paha Atas', 'category' => 'Ayam', 'price' => 7000, 'stock' => 45, 'description' => 'Paha atas, dagingnya tebal', 'image_url' => '/img/cat-paha.png'],
-        ['id' => 'paha-bawah', 'name' => 'Paha Bawah', 'category' => 'Ayam', 'price' => 7000, 'stock' => 45, 'description' => 'Paha bawah, lebih gampang dimakan', 'image_url' => '/img/cat-paha.png'],
+        ['id' => 'paha-atas', 'name' => 'Paha Atas', 'category' => 'Ayam', 'price' => 7000, 'stock' => 45, 'description' => 'Paha atas, dagingnya tebal', 'image_url' => '/img/cat-dada.png'],
+        ['id' => 'paha-bawah', 'name' => 'Paha Bawah', 'category' => 'Ayam', 'price' => 7000, 'stock' => 45, 'description' => 'Paha bawah, lebih gampang dimakan', 'image_url' => '/img/cat-dada.png'],
         ['id' => 'ceker-ayam', 'name' => 'Ceker Ayam', 'category' => 'Ayam', 'price' => 500, 'stock' => 100, 'description' => 'Ceker empuk dengan bumbu gurih', 'image_url' => '/img/cat-ceker.png'],
-        ['id' => 'hati-ayam', 'name' => 'Hati Ayam', 'category' => 'Ayam', 'price' => 2000, 'stock' => 40, 'description' => 'Hati ayam gurih dan lembut', 'image_url' => '/img/cat-paha.png'],
-        ['id' => 'leher-ayam', 'name' => 'Leher Ayam', 'category' => 'Ayam', 'price' => 5000, 'stock' => 35, 'description' => 'Leher ayam crispy gurih', 'image_url' => '/img/cat-leher.png'],
-        ['id' => 'bakso-goreng-stick', 'name' => 'Bakso Goreng Stick', 'category' => 'Camilan', 'price' => 1000, 'stock' => 60, 'description' => 'Bakso goreng renyah dan gurih', 'image_url' => '/img/cat-bakso.png'],
+        ['id' => 'hati-ayam', 'name' => 'Hati Ayam', 'category' => 'Ayam', 'price' => 3000, 'stock' => 40, 'description' => 'Hati ayam gurih dan lembut', 'image_url' => '/img/cat-dada.png'],
+        ['id' => 'leher-ayam', 'name' => 'Leher Ayam', 'category' => 'Ayam', 'price' => 500, 'stock' => 35, 'description' => 'Leher ayam crispy gurih', 'image_url' => '/img/cat-leher.png'],
+        ['id' => 'bakso-goreng', 'name' => 'Bakso Goreng', 'category' => 'Camilan', 'price' => 1000, 'stock' => 60, 'description' => 'Bakso goreng renyah dan gurih', 'image_url' => '/img/cat-bakso.png'],
     ];
 
     public $incrementing = false;
@@ -40,10 +40,27 @@ class Product extends Model
         'active' => 'boolean',
     ];
 
+    public function getImageUrlAttribute(?string $value): string
+    {
+        $path = trim((string) $value);
+        if ($path === '' || $path === '/img/cat-paha.png' || $path === 'img/cat-paha.png') {
+            return '/img/cat-dada.png';
+        }
+
+        return $path;
+    }
+
     public static function seedDefaults(): void
     {
         try {
+            $existingIds = static::query()->pluck('id')->all();
+            $existingLookup = array_flip($existingIds);
+
             foreach (self::DEFAULT_PRODUCTS as $data) {
+                if (isset($existingLookup[$data['id']])) {
+                    continue;
+                }
+
                 static::firstOrCreate(
                     ['id' => $data['id']],
                     array_merge($data, ['active' => true])

@@ -54,19 +54,60 @@ class Order extends Model
             ->join(', ');
     }
 
-    public static function generateCode(): string
+    /**
+     * In-process deduplication cache for unsaved order codes generated in the same runtime.
+     *
+     * @var array<string, true>
+     */
+    private static array $recentCodes = [];
+
+    /**
+     * Generate a collision-resistant, unambiguous order code formatted as `AYM-YYMMDD-XXXX`
+     * using Crockford-like Base32 (`30^4 = 810,000` codes/day; automatically escalates to 6 chars).
+     *
+     * @param  array<int, string>  $excludeCodes
+     */
+    public static function generateCode(array $excludeCodes = []): string
     {
-        for ($i = 0; $i < 20; $i++) {
-            $code = 'AYM-' . str_pad((string) random_int(1000, 9999), 4, '0', STR_PAD_LEFT);
+        $alphabet = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+        $maxIndex = strlen($alphabet) - 1;
+        $datePart = now('Asia/Jakarta')->format('ymd');
+        $excludeLookup = $excludeCodes !== [] ? array_flip($excludeCodes) : [];
+
+        $recordCode = static function (string $code): string {
+            if (count(self::$recentCodes) >= 1024) {
+                self::$recentCodes = array_slice(self::$recentCodes, -512, null, true);
+            }
+            self::$recentCodes[$code] = true;
+
+            return $code;
+        };
+
+        for ($attempt = 0; $attempt < 24; $attempt++) {
+            $length = $attempt >= 12 ? 6 : 4;
+            $suffix = '';
+
+            for ($pos = 0; $pos < $length; $pos++) {
+                $suffix .= $alphabet[random_int(0, $maxIndex)];
+            }
+
+            $code = "AYM-{$datePart}-{$suffix}";
+            if (isset($excludeLookup[$code]) || isset(self::$recentCodes[$code])) {
+                continue;
+            }
+
             try {
-                if (!static::where('id', $code)->exists()) {
-                    return $code;
+                if (! static::where('id', $code)->exists()) {
+                    return $recordCode($code);
                 }
             } catch (\Throwable) {
-                return $code;
+                return $recordCode($code);
             }
         }
 
-        return 'AYM-' . random_int(1000, 9999);
+        // Deterministic microsecond-entropy fallback if DB collisions ever exhausted random retries
+        $entropy = strtoupper(substr(hash('sha256', microtime(true) . bin2hex(random_bytes(8))), 0, 8));
+
+        return $recordCode("AYM-{$datePart}-{$entropy}");
     }
 }

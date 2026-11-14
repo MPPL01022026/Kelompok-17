@@ -2,20 +2,15 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Seed the application's database with Ayamo UMKM testing data (excluding products).
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'admin',
-            'password' => Hash::make('admin123'),
-        ]);
+        $this->call(UmkmTestingSeeder::class);
     }
 }

@@ -21,7 +21,7 @@ class WebOrderController extends MobileStorefrontController
         $order = $this->ownedOrder($request, $code);
         $products = $this->activeProducts()->keyBy('id');
         $cart = $request->session()->get('cart', []);
-        $added = 0;
+        $reorderPayload = [];
 
         foreach ($order->parsed_items as $item) {
             $productId = $item['product_id'] ?? null;
@@ -33,15 +33,23 @@ class WebOrderController extends MobileStorefrontController
 
             $quantity = max(1, (int) ($item['quantity'] ?? 1));
             $cart[$productId] = min(((int) ($cart[$productId] ?? 0)) + $quantity, $product->stock);
-            $added++;
+            $reorderPayload[] = [
+                'id' => $product->id,
+                'name' => $product->name,
+                'price' => $product->price,
+                'stock' => $product->stock,
+                'qty' => $quantity,
+            ];
         }
 
-        if ($added === 0) {
+        if ($reorderPayload === []) {
             return back()->withErrors(['cart' => 'Menu pada pesanan ini sedang tidak tersedia.']);
         }
 
         $request->session()->put('cart', $cart);
 
-        return redirect()->route('web.cart')->with('status', "Pesanan {$order->code} ditambahkan ke keranjang.");
+        return redirect()->route('web.cart')
+            ->with('reorder_payload', $reorderPayload)
+            ->with('status', "Pesanan {$order->code} ditambahkan ke keranjang.");
     }
 }

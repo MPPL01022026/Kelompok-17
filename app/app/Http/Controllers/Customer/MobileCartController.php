@@ -24,7 +24,10 @@ class MobileCartController extends MobileStorefrontController
 
     public function store(Request $request): RedirectResponse|JsonResponse
     {
-        $data = $request->validate(['product_id' => ['required', 'string', 'max:100']]);
+        $data = $request->validate([
+            'product_id' => ['required', 'string', 'max:100'],
+            'quantity' => ['sometimes', 'integer', 'min:1', 'max:100'],
+        ]);
         $products = $this->activeProducts();
         $product = $products->firstWhere('id', $data['product_id']);
 
@@ -33,7 +36,8 @@ class MobileCartController extends MobileStorefrontController
         }
 
         $cart = $request->session()->get('cart', []);
-        $cart[$product->id] = min(((int) ($cart[$product->id] ?? 0)) + 1, $product->stock);
+        $addQty = (int) ($data['quantity'] ?? 1);
+        $cart[$product->id] = min(((int) ($cart[$product->id] ?? 0)) + $addQty, $product->stock);
         $request->session()->put('cart', $cart);
 
         if ($request->expectsJson()) {

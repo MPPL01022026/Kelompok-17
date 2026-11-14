@@ -41,9 +41,38 @@ class StoreOrderRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
+        $rawItems = $this->input('items');
+
+        if (empty($rawItems) && $this->hasSession()) {
+            $rawItems = $this->session()->get('cart', []);
+        }
+
+        $normalizedItems = [];
+        if (is_array($rawItems)) {
+            if (array_is_list($rawItems)) {
+                foreach ($rawItems as $row) {
+                    if (is_array($row) && isset($row['product_id'])) {
+                        $pid = (string) $row['product_id'];
+                        $qty = (int) ($row['quantity'] ?? 0);
+                        if ($pid !== '' && $qty > 0) {
+                            $normalizedItems[$pid] = ($normalizedItems[$pid] ?? 0) + $qty;
+                        }
+                    }
+                }
+            } else {
+                foreach ($rawItems as $productId => $qty) {
+                    $pid = (string) $productId;
+                    if ($pid !== '' && is_numeric($qty)) {
+                        $normalizedItems[$pid] = (int) $qty;
+                    }
+                }
+            }
+        }
+
         $this->merge([
             'customer_name' => $this->string('customer_name')->trim()->toString(),
             'phone' => preg_replace('/[\s\-]+/', '', $this->string('phone')->toString()),
+            'items' => $normalizedItems,
         ]);
     }
 }
