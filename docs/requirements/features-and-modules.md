@@ -40,39 +40,36 @@ mindmap
 
 ### A. Modul Customer Ordering (Web & Mobile)
 
-- **Keranjang Lokal Tanpa Request per Klik**: Penambahan produk disimpan di perangkat dan tidak melakukan fetch sampai pelanggan membuka keranjang atau melanjutkan ke checkout.
-- **Sinkronisasi Terukur**: Isi keranjang dikirim sekaligus ke session server. Server tetap menghitung harga dan memeriksa status produk sebagai sumber kebenaran final.
-- **Pencegahan Pesanan Ganda**: Checkout menggunakan token unik untuk menahan double-click dan request bersamaan.
-- **Reservasi Stok Atomik**: Stok diperiksa serta dialokasikan dalam database transaction dengan row lock untuk mencegah overselling pada web maupun mobile.
+- **Keranjang Lokal Tanpa Request per Klik**: Penambahan produk disimpan di perangkat (`localStorage`) dan baru disinkronkan saat pelanggan membuka keranjang atau melanjutkan ke checkout; server tetap menjadi sumber kebenaran final harga, ketersediaan, dan stok.
+- **Status Buka/Tutup Toko Otomatis & Override**: Layout Web, Mobile, dan endpoint checkout mengevaluasi `Settings::getStoreStatus()`. Saat toko sedang ditutup oleh admin (`maintenance_mode = true`) atau di luar jam operasional (`auto`), banner alasan tutup ditampilkan dan pembuatan pesanan baru diblokir.
+- **Pembayaran Non-Tunai 2 Tab (Transfer & QRIS)**: Pelanggan yang memilih metode transfer disajikan 2 sub-pilihan: tab **Transfer** (menampilkan semua channel bank/e-wallet aktif beserta tombol salin nomor rekening) dan tab **QRIS** (menampilkan pratinjau QRIS berukuran besar agar jelas dipindai beserta tombol **Unduh Gambar QRIS**).
+- **Pencegahan Pesanan Ganda & Kode Anti-Collision**: Checkout memakai `checkout_token` unik dengan cache lock serta generator kode `Order::generateCode()` berformat `AYM-YYMMDD-XXXX`.
+- **Reservasi Stok Atomik**: Stok diperiksa serta dialokasikan dalam `DB::transaction()` menggunakan `lockForUpdate()` sebelum order dibuat (`stock_reserved = true`).
 
-### B. Modul Kasir & Point of Sale (POS)
-Dirancang untuk kecepatan operasional di meja kasir dengan antarmuka yang bersih dan responsif.
-- **Pencarian & Filter Cepat**: Filter berdasarkan kategori menu (Paket Ayam Geprek, Ala Carte, Minuman, Ekstra Sambal).
-- **Kustomisasi Pesanan**: Pemilihan level kepedasan (Level 0 - 10), pilihan sambal (Sambal Bawang, Sambal Matah, Sambal Ijo), dan add-ons (Nasi, Telur, Tahu/Tempe).
-- **Billing & Pembayaran**:
-  - Dukungan pembayaran Tunai (dengan hitung otomatis uang diterima dan kembalian).
-  - Dukungan non-tunai (QRIS / Transfer Bank).
-- **Cetak Struk**: Format cetak struk ramah printer thermal (58mm / 80mm).
+### B. Modul Kasir POS & Alur Pesanan Admin
 
-### C. Modul Menu & Kategori
-- **Manajemen Kategori**: Pengelompokan jenis produk.
-- **Katalog Produk**: Nama, foto/thumbnail, deskripsi, harga jual, dan status stok (Tersedia / Habis).
-- **Penetapan HPP (Harga Pokok Penjualan)**: Untuk memantau margin keuntungan per produk.
+Dirancang untuk kecepatan operasional kasir dan pengelolaan antrean pesanan online:
+- **Kasir POS Manual Multi-Item**: Input penjualan langsung di toko dengan pemotongan stok atomik untuk seluruh item dalam satu transaksi.
+- **Alur Status Pesanan 4-Tahap**: Visualisasi dan kontrol status yang jelas (`Menunggu Konfirmasi` -> `Diproses` -> `Siap Diambil` -> `Dikonfirmasi / Masuk Kas`, atau `Dibatalkan`). Konfirmasi mencatat `Transaction` `order-<id>` secara idempoten; pembatalan atau pengembalian status membersihkan catatan kas dan mengembalikan stok yang tereservasi.
+- **Konfirmasi & Notifikasi Bebas Alert Native**: Seluruh aksi destruktif memakai komponen `<x-modal-confirmation>` (`data-confirm` / `window.AyamoConfirm`) dan umpan balik status memakai `<x-modal-notification>` (antrean toast maks. 5 item, bebas `alert()`/`confirm()` bawaan browser, dan 100% ikon SVG tanpa emoji).
 
-### D. Modul Stok & Bahan Baku (Inventory)
-- **Master Bahan Baku**: Pencatatan bahan mentah (Ayam potong kg/ekor, Beras kg, Cabai rawit kg, Minyak goreng liter, Tepung, dsb.).
-- **Stok Masuk (*Stock In*)**: Pencatatan pembelian bahan dari supplier beserta biayanya.
-- **Pengurangan Stok Otomatis**: Integrasi pesanan kasir dengan estimasi pengurangan bahan baku utama.
-- **Status Reservasi Pesanan**: Setiap order mencatat apakah stok sudah dialokasikan agar konfirmasi admin tidak memotong stok dua kali.
-- **Notifikasi Stok Menipis**: Peringatan visual jika stok berada di bawah batas minimum (*threshold*).
+### C. Modul Katalog Produk & Stok Cepat
 
-### E. Modul Laporan & Analitik
-- **Laporan Transaksi Harian & Bulanan**: Grafik tren omzet harian, jumlah transaksi, dan rata-rata belanja (*average order value*).
-- **Analisis Menu Terlaris (*Best Seller*)**: Identifikasi menu paling disukai konsumen untuk strategi promosi.
-- **Laporan Kas Laci (Shift Kasir)**: Rekonsiliasi uang masuk awal shift vs akhir shift kasir.
+- **Katalog Produk**: CRUD menu (nama, kategori, deskripsi, harga, stok, foto via upload file ke `public/img/uploads` atau URL/preset dengan pratinjau gambar langsung), arsip (`active = false`), dan pulihkan produk.
+- **Quick Stock**: Tombol penyesuaian stok cepat (`+1`, `+5`, `-1`) dan indikator peringatan stok menipis.
+- **Fallback Gambar Aman**: `Product::getImageUrlAttribute()` otomatis mengarahkan referensi usang `/img/cat-paha.png` ke `/img/cat-dada.png` agar tidak muncul broken image.
 
-### F. Modul Manajemen Akun & Hak Akses
-- **Role Berjenjang**:
-  - `Owner / Pemilik`: Akses penuh ke seluruh laporan finansial, analitik, dan pengaturan sistem.
-  - `Admin / Manajer Gerai`: Akses ke menu, inventaris, dan operasional harian.
-  - `Kasir`: Akses khusus ke antarmuka POS, riwayat transaksi harian, dan tutup kas shift.
+### D. Modul Pengaturan Toko Fleksibel & Channel Pembayaran
+
+- **Override Status Toko**: Pilihan 3 mode status toko (**Buka Paksa**, **Tutup Hari Ini / Override** beserta catatan alasan, dan **Otomatis Sesuai Jam Buka** zona `Asia/Jakarta`).
+- **Pengaturan Channel Pembayaran Terstruktur**: Editor UI rapi untuk daftar rekening transfer (tambah/edit/aktifkan channel bank/e-wallet tanpa perlu menulis JSON mentah), upload/URL QRIS, serta pesan WhatsApp.
+- **Key-Value Fleksibel**: Panel khusus menambah/mengedit/menghapus key kustom apa saja pada tabel `settings` (`promo_text`, `instagram_handle`, dsb.) sementara key sistem terproteksi akan kembali ke nilai default jika direset.
+
+### E. Modul Laporan Keuangan UMKM & Export CSV
+
+- **Rekap & Filter Penjualan**: Ringkasan eksekutif pendapatan hari ini/periode, pemisahan sumber (**Online** vs **Manual POS**), menu terlaris, dan daftar buku kas.
+- **Export CSV Aman**: Unduh laporan CSV dengan perlindungan sanitasi karakter awal (`=`, `+`, `-`, `@`, `\t`, `\r`) terhadap Excel/Spreadsheet formula injection.
+
+### F. Modul Keamanan & Autentikasi Admin
+
+- **Sesi Admin & Proteksi Brute-Force**: Login admin berbasis hash `ADMIN_PASSWORD_HASH` (atau fallback pengaturan) dengan pencatatan gagal login di `login_attempts` (lockout otomatis setelah 5 percobaan gagal), throttle rute, serta header keamanan HTTP.

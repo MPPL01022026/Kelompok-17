@@ -4,12 +4,12 @@ Dokumen ini adalah pedoman wajib bagi seluruh pengembang (manusia maupun agen AI
 
 ---
 
-## 1. Konvensi Penanganan Error Validasi UI
+## 1. Konvensi Penanganan Error, Konfirmasi, & Notifikasi UI
 
-Dalam menyajikan pesan error dan notifikasi pada antarmuka pengguna (UI), terdapat **2 metode standar** yang wajib diikuti secara konsisten:
+Dalam menyajikan pesan error, konfirmasi tindakan, dan notifikasi pada antarmuka pengguna (UI), terdapat **3 komponen standar** yang wajib dipakai secara konsisten (**dilarang menggunakan `alert()` atau `confirm()` bawaan browser**):
 
 ### A. Pesan Error Spesifik Input Form (`<x-input-error>`)
-Untuk error yang terkait langsung dengan input tertentu (misalnya: *nama menu wajib diisi*, *harga harus angka*, *username sudah digunakan*):
+Untuk error yang terkait langsung dengan input tertentu (misalnya: *nama menu wajib diisi*, *harga harus angka*):
 - Letakkan komponen `<x-input-error>` tepat di bawah field input yang bersangkutan.
 - **Contoh Penggunaan:**
 ```blade
@@ -20,15 +20,23 @@ Untuk error yang terkait langsung dengan input tertentu (misalnya: *nama menu wa
 </div>
 ```
 
-### B. Error Utama / Global Non-Field (`<x-modal-notification>`)
-Untuk error kritis yang tidak terikat pada input tunggal (misalnya: *stok bahan baku tidak mencukupi untuk memproses pesanan*, *gagal memproses pembayaran*, *akses transaksi ditolak*):
-- Tampilkan menggunakan komponen `<x-modal-notification>`.
-- Dipicu melalui session flash message dari controller / Livewire action:
-```php
-// Di dalam method Livewire atau Controller:
-session()->flash('error', 'Gagal memproses transaksi: Saldo kas laci tidak mencukupi.');
+### B. Error Global & Toast Antrean (`<x-modal-notification>`)
+Untuk error kritis non-field dan umpan balik status aksi di seluruh halaman:
+- Pasang `<x-modal-notification />` (atau `<x-modal-notification position="mobile" />` di layout mobile) sekali di layout utama.
+- **SSR Flash**: `session()->flash('error', ...)` memunculkan modal peringatan blocking (`role="alertdialog"`), sedangkan `status`, `success`, `warning`, dan `info` memunculkan toast notifikasi.
+- **Client-side JS**: Gunakan `window.AyamoNotify(message, type, duration)` untuk toast antrean (dibatasi maksimal `MAX_NOTIFICATIONS = 5` agar tidak menumpuk di layar) atau `window.AyamoAlert(options)` untuk modal dialog non-blocking.
+
+### C. Dialog Konfirmasi Reusable (`<x-modal-confirmation>`)
+Untuk setiap aksi berisiko atau destruktif (membatalkan pesanan, mengarsipkan produk, menghapus key pengaturan, ubah status penting):
+- Pasang `<x-modal-confirmation />` di layout/panel terkait.
+- Gunakan atribut deklaratif pada `<form>`, `<button>`, atau `<a>`:
+```blade
+<form method="POST" action="..." data-confirm="Batalkan pesanan ini?" data-confirm-title="Batalkan Pesanan" data-confirm-variant="danger">
+    @csrf
+    <button type="submit">Batalkan</button>
+</form>
 ```
-- Komponen `<x-modal-notification>` pada layout utama akan mendeteksi session `error` dan memunculkan modal dialog peringatan dengan jelas.
+- Atau panggil secara programatik via `await window.AyamoConfirm({ title, message, confirmText, cancelText, variant })`.
 
 ---
 
@@ -136,10 +144,13 @@ Level kepedasan menu ayam geprek diseragamkan dengan token:
 
 ---
 
-## 4. Pedoman Penggunaan AI & Batasan Kode (*No AI Slop*)
+## 4. Pedoman Penggunaan AI, Ikon SVG, & Batasan Kode (*No AI Slop*)
 
-Demi menjaga integritas struktur data dan performa jangka panjang:
-- **Dilarang Keras AI Slop**: Jangan membuat kode berbelit-belit, boilerplate yang tidak diperlukan, atau struktur yang tidak diuji.
+Demi menjaga integritas struktur data, konsistensi visual, dan performa jangka panjang:
+- **Dilarang Keras AI Slop**: Jangan membuat kode berbelit-belit, boilerplate yang tidak diperlukan, atau struktur yang tidak diuji. Gunakan gaya komunikasi ringkas dan berbasis fakta.
+- **Wajib Ikon SVG Murni (Tanpa Emoji di UI)**: Dilarang menggunakan emoji atau karakter simbol Unicode (`⭐`, `⬇`, dsb.) sebagai ikon antarmuka di seluruh file PHP/Blade (`app/` & `resources/views/`). Gunakan inline `<svg aria-hidden="true">` yang selaras dengan ukuran dan warna elemen.
+- **Aturan Cascade Layer Tailwind CSS v4**: Seluruh styling kustom/legacy di [`app/resources/css/app.css`](file:///d:/Project/2tugas/tugas-mppl/Kelompok-17/app/resources/css/app.css) wajib berada di dalam `@layer components { ... }`, dan selector elemen layout memakai `main:not([class])` agar `@layer utilities` (`pt-*`, `pb-*`, `px-*`, `py-*`, `max-w-*`, `mx-auto`) tidak pernah tertimpa.
+- **Kontras Aset Logo (`logo.webp`)**: Karena `public/img/logo.webp` memakai latar transparan dengan maskot gelap, wajib diberi container/badge permukaan terang (`bg-[#FFFDF9]`) saat ditempatkan di atas permukaan gelap (footer atau hero gelap login admin).
 - **Integritas Database**: Skema tabel, migrasi, relasi antar-model, dan seeder harus dirancang secara matang, terstruktur, serta diverifikasi secara cermat sesuai kebutuhan bisnis UMKM Ayamo.
 - **Konsistensi Framework**: Selalu gunakan fitur resmi Laravel 12, Livewire Volt, dan Flux UI sesuai dokumentasi resmi.
 

@@ -2,19 +2,22 @@
 
 Dokumen ini adalah revisi skema basis data Ayamo untuk alur baru: **pelanggan tanpa login**, pembayaran **Tunai / Transfer (Bank & QRIS statis)** yang diverifikasi lewat WhatsApp, dan **aplikasi admin terpisah** (lihat penjualan + CRUD menu) yang memakai database yang sama.
 
-> **Pembaruan 2 November 2026:** skema pesanan memiliki penanda `stock_reserved` untuk membedakan pesanan yang stoknya sudah dialokasikan secara atomik dengan pesanan lama yang belum memakai mekanisme reservasi. Kolom ini sudah tersedia melalui migration `2026_11_02_052334_add_stock_reserved_to_orders_table.php`.
+> **Pembaruan 14 November 2026:** selain penanda `stock_reserved` (`2026_11_02_052334_add_stock_reserved_to_orders_table.php`), kolom `settings.value` diperlebar menjadi `TEXT` melalui `2026_11_14_000001_widen_settings_value_to_text.php` untuk menampung konfigurasi JSON `payment_channel` multi-rekening dan pengaturan fleksibel. Generator kode pesanan `Order::generateCode()` juga telah diperbarui ke format anti-collision `AYM-YYMMDD-XXXX`.
 
 ### Status implementasi skema
 
-Dokumen ini memuat **skema target v2.1** sekaligus persyaratan integritas yang wajib dipertahankan. Implementasi aktif saat pembaruan ini masih berada pada tahap transisi:
+Dokumen ini memuat perbandingan antara **implementasi aktif di `app/database/migrations/`** dan **skema target v2.1** beserta persyaratan integritas yang wajib dipertahankan:
 
-| Area | Implementasi aktif | Target v2.1 |
+| Area | Implementasi aktif saat ini | Target v2.1 / Catatan |
 | :--- | :--- | :--- |
-| Detail item pesanan | `orders.items` dalam JSON | Tabel ter-normalisasi `order_items` |
-| Rekap penjualan | Tabel `transactions` masih digunakan | Status pembayaran terintegrasi pada `orders` |
-| Reservasi stok | `orders.stock_reserved` melalui migration baru | Tetap dipertahankan sebagai penanda alokasi stok |
+| Katalog produk (`products`) | `id` (slug/UUID), `name`, `category`, `price`, `stock`, `description`, `image_url`, `active` (8 menu default via `Product::DEFAULT_PRODUCTS` + fallback `/img/cat-paha.png` -> `/img/cat-dada.png`) | Tambah `group_name`, `is_available`, `sort_order` jika diperlukan fase lanjut |
+| Pesanan & status (`orders`) | `id` (`AYM-YYMMDD-XXXX` via `Order::generateCode()`), `customer_name`, `phone`, `items` (JSON), `total`, `note`, `payment_method`, `status` (`pending` \| `processing` \| `ready` \| `confirmed` \| `cancelled`), `stock_reserved` | Normalisasi `order_items` & kolom terpisah `tracking_token`/`unique_code` pada iterasi berikutnya |
+| Rekap penjualan (`transactions`) | Tabel `transactions` aktif menampung transaksi POS (`source = 'manual'`) dan pesanan terkonfirmasi (`id = 'order-<order_id>'`, `source = 'online'`) | Terintegrasi 4-tahap lewat `Admin\OrderController@updateStatus` |
+| Pengaturan (`settings`) | Tabel `settings` (`key` PK `VARCHAR`, `value` `TEXT` via migrasi `2026_11_14_000001_widen_settings_value_to_text.php`); menyimpan 8 protected keys (`Settings::DEFAULT_SETTINGS`) + key-value kustom fleksibel | Dikelola via form terstruktur & panel KV fleksibel admin |
+| Keamanan login (`login_attempts`) | Tabel `login_attempts` aktif melacak percobaan gagal & `locked_until` | Tetap dipertahankan |
+| Seeder pengujian (`UmkmTestingSeeder`) | Dipanggil `DatabaseSeeder`; mengisi 8+ default & 3 key fleksibel (`promo_text`, `instagram_handle`, `free_packaging_min`), 15 `orders`, 19 `transactions`, 2 `login_attempts` uji, **tanpa** mengisi/mengubah tabel `products` | Menjaga data katalog uji tetap terpisah |
 
-Bagian target yang belum memiliki migration tidak boleh dianggap sudah tersedia di database deployment.
+Bagian target v2.1 yang belum memiliki migration tidak boleh dianggap sudah tersedia di database deployment.
 
 ---
 
@@ -257,31 +260,35 @@ Mekanisme berikut wajib berlaku untuk checkout **mobile dan web**:
 7. Pesanan lama memiliki nilai default `stock_reserved = false`. Saat dikonfirmasi, sistem menjalankan alokasi stok dengan lock dan kemudian mengubah nilainya menjadi `true`.
 8. Saat alur pembatalan atau kedaluwarsa diterapkan, pelepasan stok hanya dilakukan untuk pesanan dengan `stock_reserved = true`, kemudian flag dikembalikan ke `false` dalam transaction yang sama.
 
-### Migration
+### Migration & Seeder Aktif
 
 ```text
-database/migrations/2026_11_02_052334_add_stock_reserved_to_orders_table.php
+app/database/migrations/
+├── 2026_10_01_000000_create_ayamo_tables.php
+├── 2026_10_11_051603_tambahan.php
+├── 2026_11_02_052334_add_stock_reserved_to_orders_table.php
+└── 2026_11_14_000001_widen_settings_value_to_text.php
+
+app/database/seeders/
+├── DatabaseSeeder.php        # Memanggil UmkmTestingSeeder
+└── UmkmTestingSeeder.php     # Mengisi settings, orders, transactions, & login_attempts (kecuali products)
 ```
 
-Migration menambahkan kolom berikut:
-
-```sql
-stock_reserved BOOLEAN NOT NULL DEFAULT FALSE
-```
-
-Migration wajib dijalankan pada setiap environment sebelum versi aplikasi dengan mekanisme reservasi stok dipublikasikan:
+Seluruh migration wajib dijalankan sebelum aplikasi dipublikasikan:
 
 ```bash
 php artisan migrate
+# Opsional data testing UMKM (tanpa tabel products):
+php artisan db:seed --class=UmkmTestingSeeder
 ```
 
 ## 6. Eloquent Model Mapping
 
-| Tabel | Eloquent Model |
-| :--- | :--- |
-| `products` | `App\Models\Product` |
-| `orders` | `App\Models\Order` |
-| `order_items` | `App\Models\OrderItem` |
-| `store_settings` | `App\Models\StoreSetting` |
-| `login_attempts` | `App\Models\LoginAttempt` |
-| `users` | `App\Models\User` |
+| Tabel (Aktif) | Eloquent Model | Catatan Implementasi |
+| :--- | :--- | :--- |
+| `products` | `App\Models\Product` | `DEFAULT_PRODUCTS` (8 item), `seedDefaults()`, `getImageUrlAttribute()` |
+| `orders` | `App\Models\Order` | `generateCode()` (`AYM-YYMMDD-XXXX`), `stock_reserved` |
+| `transactions` | `App\Models\Transaction` | Mutasi kas `online` (`order-<id>`) dan `manual` (POS) |
+| `settings` | `App\Models\Settings` | Key-value fleksibel, `getPaymentChannels()`, `getStoreStatus()` |
+| `login_attempts` | `App\Models\LoginAttempt` | Pelacak percobaan login gagal & lockout 15 menit |
+| `users` | `App\Models\User` | Akun user aplikasi |
