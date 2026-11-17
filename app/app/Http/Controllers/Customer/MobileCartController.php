@@ -103,7 +103,7 @@ class MobileCartController extends MobileStorefrontController
         return back();
     }
 
-    public function update(Request $request): RedirectResponse
+    public function update(Request $request): RedirectResponse|JsonResponse
     {
         $data = $request->validate([
             'quantities' => ['sometimes', 'array', 'max:30'],
@@ -121,6 +121,14 @@ class MobileCartController extends MobileStorefrontController
         }
 
         $request->session()->put('cart', $cart);
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'ok' => true,
+                'cart' => $cart,
+                'cartCount' => array_sum($cart),
+            ]);
+        }
 
         return back();
     }
