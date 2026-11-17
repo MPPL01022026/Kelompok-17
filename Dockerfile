@@ -86,7 +86,7 @@ COPY --from=frontend --chown=www-data:www-data /app/public/build ./public/build
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 # Prepare writable directories, package discovery, and entrypoint permissions
-RUN rm -f bootstrap/cache/*.php \
+RUN rm -f bootstrap/cache/*.php resources/views/dashboard.blade.php \
     && mkdir -p \
         storage/app/public/products \
         storage/app/public/payment \

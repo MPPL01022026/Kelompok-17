@@ -58,6 +58,9 @@ if [ "${AUTORUN_SEED:-false}" = "true" ]; then
     php artisan db:seed --class=DatabaseSeeder --force --no-interaction
 fi
 
+# Remove unused starter-kit view that references missing components during view:cache
+rm -f resources/views/dashboard.blade.php
+
 # Refresh Laravel caches with live runtime environment variables
 php artisan optimize:clear --no-interaction || true
 php artisan optimize --no-interaction
