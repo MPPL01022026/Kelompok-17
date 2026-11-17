@@ -21,7 +21,8 @@
         <img src="{{ str_starts_with($product->image_url, '/') ? asset(ltrim($product->image_url, '/')) : $product->image_url }}"
             alt="{{ $product->name }}"
             class="h-full w-full object-contain transition duration-300 group-hover:scale-110"
-            loading="lazy">
+            loading="lazy"
+            decoding="async">
     </div>
 
     {{-- Product Details --}}
@@ -51,6 +52,7 @@
                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                 <button type="submit" data-product-btn="{{ $product->id }}"
                     @disabled($product->stock < 1)
+                    aria-label="Tambah {{ $product->name }} ke keranjang"
                     class="inline-flex h-10 cursor-pointer items-center gap-1.5 rounded-full bg-[#ECC59A] px-4 text-xs font-black text-[#1E1915] shadow-2xs transition hover:bg-[#E2B37E] active:scale-95 disabled:cursor-not-allowed disabled:opacity-40">
                     <span class="text-sm leading-none">+</span>
                     <span data-product-btn-label>Tambah</span>

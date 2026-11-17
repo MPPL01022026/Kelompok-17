@@ -2,7 +2,7 @@
 @section('title', 'Keranjang Belanja — Ayamo')
 
 @section('content')
-    <main class="mx-auto min-h-[65vh] max-w-7xl px-4 pt-10 pb-20 sm:px-6 sm:pt-12 lg:px-8 lg:pt-14">
+    <main id="main-content" tabindex="-1" class="mx-auto min-h-[65vh] max-w-7xl px-4 pt-10 pb-20 sm:px-6 sm:pt-12 lg:px-8 lg:pt-14">
         <div>
             <span class="text-xs font-black tracking-widest text-[#EA580C] uppercase">PESANAN KAMU</span>
             <h1 class="mt-1 font-['Outfit'] text-3xl font-black text-[#1E1915] sm:text-4xl">Keranjang Belanja</h1>
@@ -11,8 +11,8 @@
 
         @if ($cartProducts->isEmpty())
             <div class="mt-10 rounded-[2.5rem] border border-[#EBE1D0] bg-[#FFFDF9] px-6 py-20 text-center shadow-2xs">
-                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-[#FBF0C4] text-4xl shadow-2xs">
-                    🍗
+                <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-[#FBF0C4] text-[#B83809] shadow-2xs">
+                    <svg aria-hidden="true" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.9"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" /></svg>
                 </div>
                 <h2 class="mt-5 font-['Outfit'] text-2xl font-black text-[#1E1915]">Keranjangmu Masih Kosong</h2>
                 <p class="mt-1 text-xs font-medium text-[#7C6D5D]">Yuk pilih potongan ayam crispy favoritmu dulu!</p>
@@ -28,12 +28,14 @@
                     @csrf
                     @foreach ($cart as $productId => $quantity)
                         @continue(! $cartProducts->has($productId))
-                        @php($product = $cartProducts->get($productId))
+                        @php $product = $cartProducts->get($productId); @endphp
                         <article class="grid grid-cols-[88px_1fr] items-center gap-4 rounded-[22px] border border-[#EBE1D0] bg-[#FFFDF9] p-4 shadow-2xs transition hover:border-[#EA580C]/40 sm:grid-cols-[100px_1fr_auto] sm:gap-5 sm:p-5">
                             {{-- Image --}}
                             <div class="flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-b from-[#FAF4EA] to-[#F3E7D3] p-2">
                                 <img src="{{ str_starts_with($product->image_url, '/') ? asset(ltrim($product->image_url, '/')) : $product->image_url }}"
                                     alt="{{ $product->name }}"
+                                    loading="lazy"
+                                    decoding="async"
                                     class="h-full w-full object-contain">
                             </div>
 
@@ -50,6 +52,7 @@
                                     <span class="sr-only">Jumlah {{ $product->name }}</span>
                                     <input name="quantities[{{ $productId }}]" type="number" min="0" max="{{ $product->stock }}"
                                         value="{{ $quantity }}"
+                                        aria-label="Jumlah {{ $product->name }}"
                                         class="h-9 w-16 bg-transparent text-center text-xs font-black text-[#1E1915] outline-none">
                                 </label>
                                 <strong class="font-['Outfit'] text-base font-black text-[#B83809]">

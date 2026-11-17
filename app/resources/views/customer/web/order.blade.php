@@ -3,10 +3,42 @@
 
 @section('content')
     @php
-        $isConfirmed = in_array($order->status, ['confirmed', 'completed'], true);
+        $statusMeta = match ($order->status) {
+            'processing' => [
+                'label' => 'Sedang Diproses',
+                'badge' => 'bg-[#FFEDD5] text-[#9A3412]',
+                'step' => 2,
+            ],
+            'ready' => [
+                'label' => 'Siap Diambil',
+                'badge' => 'bg-[#E0F2FE] text-[#075985]',
+                'step' => 3,
+            ],
+            'confirmed', 'completed' => [
+                'label' => 'Pesanan Dikonfirmasi',
+                'badge' => 'bg-[#DCFCE7] text-[#166534]',
+                'step' => 4,
+            ],
+            'cancelled' => [
+                'label' => 'Dibatalkan',
+                'badge' => 'bg-[#FEE2E2] text-[#991B1B]',
+                'step' => 0,
+            ],
+            default => [
+                'label' => 'Menunggu Konfirmasi',
+                'badge' => 'bg-[#FEF3C7] text-[#92400E]',
+                'step' => 1,
+            ],
+        };
+        $timelineSteps = [
+            ['num' => 1, 'label' => 'Menunggu Konfirmasi'],
+            ['num' => 2, 'label' => 'Sedang Diproses'],
+            ['num' => 3, 'label' => 'Siap Diambil'],
+            ['num' => 4, 'label' => 'Selesai'],
+        ];
     @endphp
 
-    <main class="mx-auto min-h-[65vh] max-w-4xl px-4 pt-10 pb-20 sm:px-6 sm:pt-12 lg:px-8 lg:pt-14">
+    <main id="main-content" tabindex="-1" class="mx-auto min-h-[65vh] max-w-4xl px-4 pt-10 pb-20 sm:px-6 sm:pt-12 lg:px-8 lg:pt-14">
         <a href="{{ route('web.history') }}" class="inline-flex items-center gap-1.5 text-xs font-black text-[#B83809] hover:underline">
             <span>← Kembali ke Riwayat Pesanan</span>
         </a>
@@ -21,11 +53,36 @@
                             {{ $order->code }}
                         </h1>
                     </div>
-                    <span class="w-fit rounded-full px-4 py-1.5 text-xs font-black shadow-2xs {{ $isConfirmed ? 'bg-[#DCFCE7] text-[#166534]' : 'bg-[#FEF3C7] text-[#92400E]' }}">
-                        {{ $isConfirmed ? '✓ Pesanan Dikonfirmasi' : '⏳ Menunggu Konfirmasi' }}
+                    <span class="w-fit rounded-full px-4 py-1.5 text-xs font-black shadow-2xs {{ $statusMeta['badge'] }}">
+                        {{ $statusMeta['label'] }}
                     </span>
                 </div>
             </div>
+
+            {{-- Progress Strip --}}
+            @if ($order->status === 'cancelled')
+                <div class="border-b border-[#FECACA] bg-[#FEF2F2] px-6 py-4 text-sm font-bold text-[#991B1B] sm:px-8">
+                    Pesanan ini telah dibatalkan. Silakan hubungi WhatsApp toko atau buat pesanan baru jika masih membutuhkan.
+                </div>
+            @else
+                <div class="border-b border-[#EBE1D0] bg-[#FAF4EA]/60 px-6 py-4 sm:px-8">
+                    <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                        @foreach ($timelineSteps as $timelineStep)
+                            @php
+                                $active = $statusMeta['step'] >= $timelineStep['num'];
+                            @endphp
+                            <div class="flex items-center gap-2.5 rounded-2xl border px-3 py-2 {{ $active ? 'border-[#EA580C]/30 bg-white shadow-2xs' : 'border-[#EBE1D0] bg-transparent opacity-60' }}">
+                                <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-black {{ $active ? 'bg-[#F59E0B] text-[#1E1915]' : 'bg-[#EBE1D0] text-[#7C6D5D]' }}">
+                                    {{ $timelineStep['num'] }}
+                                </span>
+                                <span class="text-xs font-extrabold {{ $active ? 'text-[#1E1915]' : 'text-[#7C6D5D]' }}">
+                                    {{ $timelineStep['label'] }}
+                                </span>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
 
             {{-- Body Grid --}}
             <div class="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_280px]">
@@ -87,6 +144,13 @@
                             Pesan Menu Ini Lagi
                         </button>
                     </form>
+
+                    @if (in_array($order->payment_method, ['whatsapp', 'transfer'], true) && $order->status !== 'cancelled')
+                        <a href="{{ route('web.payment', $order->id) }}"
+                            class="mt-2.5 flex h-10 w-full items-center justify-center rounded-2xl border border-[#D8CBB8] bg-white text-xs font-black text-[#B83809] transition hover:border-[#B83809] hover:bg-[#FFF9F2]">
+                            Lihat Transfer Bank &amp; QRIS →
+                        </a>
+                    @endif
                 </aside>
             </div>
         </section>

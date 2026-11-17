@@ -2,14 +2,14 @@
 @section('title', 'Selesaikan Pesanan — Ayamo')
 
 @section('content')
-    <main class="mx-auto min-h-[65vh] max-w-7xl px-4 pt-10 pb-20 sm:px-6 sm:pt-12 lg:px-8 lg:pt-14">
+    <main id="main-content" tabindex="-1" class="mx-auto min-h-[65vh] max-w-7xl px-4 pt-10 pb-20 sm:px-6 sm:pt-12 lg:px-8 lg:pt-14">
         <a href="{{ route('web.cart') }}" class="inline-flex items-center gap-1.5 text-xs font-black text-[#B83809] hover:underline">
             <span>← Kembali ke Keranjang</span>
         </a>
 
         <div class="mt-4">
             <span class="text-xs font-black tracking-widest text-[#EA580C] uppercase">LANGKAH TERAKHIR</span>
-            <h1 class="mt-1 font-['Outfit'] text-3xl font-black text-[#1E1915] sm:text-4xl">Selesaikan Pesanan</h1>
+            <h1 class="mt-1 font-['Outfit'] text-3xl font-black text-[#1E1915] sm:text-4xl">Selesaikan pesanan</h1>
             <p class="mt-1 text-xs font-medium text-[#7C6D5D]">Isi data pemesan dan tentukan cara pembayaran.</p>
         </div>
 
@@ -76,7 +76,11 @@
                         <label class="group cursor-pointer">
                             <input type="radio" name="payment_method" value="cod" class="peer sr-only" {{ old('payment_method', 'cod') === 'cod' ? 'checked' : '' }}>
                             <div class="flex h-full gap-4 rounded-2xl border-2 border-[#EBE1D0] bg-white p-5 transition peer-checked:border-[#B83809] peer-checked:bg-[#FFF9F2] peer-checked:shadow-xs">
-                                <span class="text-3xl">💵</span>
+                                <span class="text-3xl text-[#166534]">
+                    <svg aria-hidden="true" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.9">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
+                    </svg>
+                </span>
                                 <div>
                                     <b class="block font-['Outfit'] text-base font-black text-[#1E1915]">Bayar Tunai</b>
                                     <small class="mt-1 block text-xs leading-relaxed text-[#7C6D5D]">Bayar langsung di kasir saat mengambil pesanan.</small>
@@ -88,7 +92,11 @@
                         <label class="group cursor-pointer">
                             <input type="radio" name="payment_method" value="whatsapp" class="peer sr-only" {{ old('payment_method') === 'whatsapp' ? 'checked' : '' }}>
                             <div class="flex h-full gap-4 rounded-2xl border-2 border-[#EBE1D0] bg-white p-5 transition peer-checked:border-[#B83809] peer-checked:bg-[#FFF9F2] peer-checked:shadow-xs">
-                                <span class="text-3xl">🏦</span>
+                                <span class="text-3xl text-[#B83809]">
+                    <svg aria-hidden="true" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.9">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M4 10V8l8-4 8 4v2M5 10v7m4-7v7m6-7v7m4-7v7M3 20h18" />
+                    </svg>
+                </span>
                                 <div>
                                     <b class="block font-['Outfit'] text-base font-black text-[#1E1915]">Transfer Bank / QRIS</b>
                                     <small class="mt-1 block text-xs leading-relaxed text-[#7C6D5D]">Transfer online, lalu konfirmasi via WhatsApp.</small>
@@ -107,10 +115,10 @@
                 <div class="mt-6 space-y-3.5">
                     @foreach ($cart as $productId => $quantity)
                         @continue(! $cartProducts->has($productId))
-                        @php($product = $cartProducts->get($productId))
+                        @php $product = $cartProducts->get($productId); @endphp
                         <div class="flex items-center gap-3">
                             <div class="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-b from-[#FAF4EA] to-[#F3E7D3] p-1.5">
-                                <img src="{{ str_starts_with($product->image_url, '/') ? asset(ltrim($product->image_url, '/')) : $product->image_url }}" alt="" class="h-full w-full object-contain">
+                                <img src="{{ str_starts_with($product->image_url, '/') ? asset(ltrim($product->image_url, '/')) : $product->image_url }}" alt="{{ $product->name }}" loading="lazy" decoding="async" class="h-full w-full object-contain">
                             </div>
                             <div class="min-w-0 flex-1">
                                 <p class="truncate text-xs font-black text-[#1E1915]">{{ $product->name }}</p>
@@ -132,9 +140,24 @@
                     </strong>
                 </div>
 
+                @php $checkoutStoreStatus = \App\Models\Settings::getStoreStatus($settings ?? null); @endphp
+                @if (! $checkoutStoreStatus['is_open'])
+                    <div class="mt-4 rounded-2xl border border-[#FECACA] bg-[#FEF2F2] p-3.5 text-xs font-bold text-[#991B1B]" role="alert">
+                        <p class="font-black uppercase">{{ $checkoutStoreStatus['label'] }}</p>
+                        <p class="mt-1 font-medium">{{ $checkoutStoreStatus['reason'] }}</p>
+                    </div>
+                @endif
+                <x-input-error :messages="$errors->get('store')" class="mt-2" />
+
                 <button type="submit"
-                    class="mt-6 flex h-14 w-full cursor-pointer items-center justify-center rounded-2xl bg-[#F3B825] text-sm font-black text-[#1E1915] shadow-xs transition hover:bg-[#FACC15] active:scale-95">
-                    Buat Pesanan Sekarang →
+                    @disabled(! $checkoutStoreStatus['is_open'])
+                    class="mt-6 flex h-14 w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-[#F3B825] text-sm font-black text-[#1E1915] shadow-xs transition hover:bg-[#FACC15] active:scale-95 disabled:cursor-not-allowed disabled:bg-[#E5D7C3] disabled:text-[#7C6D5D]">
+                    <span>{{ $checkoutStoreStatus['is_open'] ? 'Buat Pesanan Sekarang' : 'Toko Sedang Tutup' }}</span>
+                    @if ($checkoutStoreStatus['is_open'])
+                        <svg aria-hidden="true" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                        </svg>
+                    @endif
                 </button>
 
                 <p class="mt-3 text-center text-[11px] leading-relaxed text-[#8C7E70]">
