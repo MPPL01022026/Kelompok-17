@@ -21,6 +21,7 @@ app/public/storage
 app/.env
 app/.env.*
 !app/.env.example
+app/bootstrap/cache/*.php
 app/storage/logs/*.log
 app/storage/framework/cache/data/*
 app/storage/framework/sessions/*
