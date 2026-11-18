@@ -19,71 +19,75 @@ Dokumen ini menjadi baseline jadwal, tanggung jawab, estimasi usaha, biaya, dan 
 
 ### 2.1 Kalender 10 Minggu
 
-| Minggu | Periode | Fokus | Deliverable Utama |
-|---:|---|---|---|
-| 1 | 24-30 September 2026 | Inisiasi, survei, peran, dan WBS | Project Charter, Stakeholder Register, WBS, workspace |
-| 2 | 1-7 Oktober 2026 | Kebutuhan dan setup proyek | Baseline kebutuhan dan Laravel starter |
-| 3 | 8-14 Oktober 2026 | UI/UX, ERD, dan arsitektur | Mockup, ERD, arsitektur, standar teknis |
-| 4 | 15-21 Oktober 2026 | Fondasi backend dan admin | Database, autentikasi, dashboard admin awal |
-| 5 | 22-28 Oktober 2026 | Produk dan customer panel | CRUD produk, katalog web, mobile responsive |
-| 6 | 29 Oktober-4 November 2026 | Keranjang, checkout, dan order | Alur pemesanan dan metode pembayaran manual |
-| 7 | 5-11 November 2026 | Transaksi, statistik, dan stok | Riwayat transaksi, analitik, stok dasar |
-| 8 | 12-18 November 2026 | Integrasi dan hardening | Versi beta terintegrasi |
-| 9 | 19-25 November 2026 | Testing dan UAT | Hasil regresi, UAT, dan daftar perbaikan |
-| 10 | 26 November-2 Desember 2026 | Perbaikan, dokumentasi, dan rilis | Release candidate, laporan, demo, serah terima |
+| Minggu | Periode | Fokus | Deliverable Utama | Status |
+|---:|---|---|---|---|
+| 1 | 24-30 September 2026 | Inisiasi, survei, peran, dan WBS | Project Charter, Stakeholder Register, WBS, workspace | ✅ Selesai |
+| 2 | 1-7 Oktober 2026 | Kebutuhan dan setup proyek | Baseline kebutuhan dan Laravel starter | ✅ Selesai |
+| 3 | 8-14 Oktober 2026 | UI/UX, ERD, dan arsitektur | Mockup, ERD, arsitektur, standar teknis | ✅ Selesai |
+| 4 | 15-21 Oktober 2026 | Fondasi backend dan admin | Database, autentikasi, dashboard admin awal | ✅ Selesai |
+| 5 | 22-28 Oktober 2026 | Produk dan customer panel | CRUD produk, katalog web, mobile responsive | ✅ Selesai |
+| 6 | 29 Oktober-4 November 2026 | Keranjang, checkout, dan order | Alur pemesanan dan metode pembayaran manual | ✅ Selesai |
+| 7 | 5-11 November 2026 | Transaksi, statistik, dan stok | Riwayat transaksi, analitik, stok dasar | ✅ Selesai |
+| 8 | 12-18 November 2026 | Integrasi dan hardening | Integrasi modul (`7.1`), UI/UX polishing (`7.2`), & hardening performa/keamanan (`7.3`) | ✅ Selesai |
+| 9 | 19-25 November 2026 | Testing dan UAT | Unit/feature test (`8.1`) selesai; regresi (`8.2`) & UAT pemilik (`8.3`) sedang dikerjakan | ▶ Sedang Dikerjakan |
+| 10 | 26 November-2 Desember 2026 | Perbaikan, dokumentasi, dan rilis | Perbaikan UAT (`8.4`), laporan akhir (`9.1`), serta deployment & demo (`9.2`-`9.3`) | ▶ Sedang Dikerjakan |
 
 ### 2.2 Daftar Aktivitas dan Dependensi
 
-| ID WBS | Minggu | Aktivitas | Durasi | Mulai | Selesai | Dependensi | PIC Utama | Output |
-|---|---:|---|---:|---|---|---|---|---|
-| 1.1 | 1 | Kickoff, pembagian peran, dan aturan kerja | 1 hari | 2026-09-24 | 2026-09-24 | - | Ruhmita | Struktur tim dan aturan kerja |
-| 1.2 | 1 | Survei, wawancara, dan dokumentasi UMKM | 2 hari | 2026-09-25 | 2026-09-26 | 1.1 | Ruhmita | Catatan kebutuhan bisnis |
-| 1.3 | 1 | Project Charter, Stakeholder Register, dan WBS | 4 hari | 2026-09-27 | 2026-09-30 | 1.2 | Ruhmita | Baseline inisiasi proyek |
-| 1.4 | 1-10 | Pengendalian jadwal, scope, risiko, dan evaluasi sprint | 10 minggu | 2026-09-24 | 2026-12-02 | 1.1 | Ruhmita | Catatan evaluasi dan pembaruan baseline |
-| 2.1 | 2 | Analisis kebutuhan fungsional dan nonfungsional | 3 hari | 2026-10-01 | 2026-10-03 | 1.2 | Ruhmita | Spesifikasi kebutuhan |
-| 2.2 | 2 | Pemodelan alur bisnis, use case, dan acceptance criteria | 3 hari | 2026-10-02 | 2026-10-04 | 2.1 | Ruhmita | Alur sistem dan kriteria penerimaan |
-| 2.3 | 2 | Workspace, repository, dan inisialisasi Laravel | 2 hari | 2026-10-01 | 2026-10-02 | 1.1 | Muhammad Rifki Aulia Pratama | Starter project dapat dijalankan |
-| 2.4 | 2 | Review dan persetujuan baseline ruang lingkup | 1 hari | 2026-10-07 | 2026-10-07 | 2.1, 2.2 | Ruhmita | Baseline scope disetujui |
-| 3.1 | 2-3 | Desain UI/UX customer mobile | 6 hari | 2026-10-05 | 2026-10-10 | 2.1 | Fazah Rizki Fatahillah | Mockup mobile |
-| 3.2 | 2-3 | Desain UI/UX web dan panel admin | 7 hari | 2026-10-05 | 2026-10-11 | 2.1 | Fazah Rizki Fatahillah | Mockup web dan admin |
-| 3.3 | 3 | ERD, struktur database, dan revisi skema | 4 hari | 2026-10-08 | 2026-10-11 | 2.1, 2.2 | Muhammad Rifki Aulia Pratama | ERD final awal |
-| 3.4 | 3 | Arsitektur, keamanan, dan standar pengembangan | 6 hari | 2026-10-09 | 2026-10-14 | 2.3, 3.3 | Muhammad Rifki Aulia Pratama | Dokumen arsitektur dan konvensi |
-| 4.1 | 3-4 | Migration, model, seeder, dan koneksi database | 5 hari | 2026-10-12 | 2026-10-16 | 3.3, 3.4 | Muhammad Rifki Aulia Pratama | Database dapat dimigrasikan |
-| 4.2 | 4 | Autentikasi, session, dan dashboard admin awal | 7 hari | 2026-10-15 | 2026-10-21 | 4.1 | Muhammad Rifki Aulia Pratama | Admin panel awal |
-| 4.3 | 4-5 | Manajemen produk, kategori, dan stok produk | 8 hari | 2026-10-18 | 2026-10-25 | 4.1, 4.2 | Muhammad Rifki Aulia Pratama | CRUD produk dan kategori |
-| 4.4 | 4-5 | Katalog, detail produk, dan customer web | 8 hari | 2026-10-19 | 2026-10-26 | 3.2, 4.1 | Fazah dan Rafi | Customer panel web |
-| 5.1 | 5-6 | Customer mobile dan responsivitas | 9 hari | 2026-10-22 | 2026-10-30 | 3.1, 4.4 | Fazah dan Rafi | Customer panel mobile |
-| 5.2 | 5-6 | Keranjang, kalkulasi total, dan checkout | 8 hari | 2026-10-27 | 2026-11-03 | 4.4, 5.1 | Rafi Alamsyah | Alur keranjang dan checkout |
-| 5.3 | 6 | Metode pembayaran tunai, transfer, dan QRIS manual | 6 hari | 2026-10-30 | 2026-11-04 | 5.2 | Muhammad Rifki Aulia Pratama | Pilihan pembayaran dan validasi |
-| 5.4 | 6-7 | Konfirmasi order dan pembaruan stok atomik | 6 hari | 2026-11-01 | 2026-11-06 | 4.3, 5.2 | Muhammad Rifki Aulia Pratama | Pemrosesan order dan stok |
-| 6.1 | 7 | Pencatatan transaksi dan penjualan manual | 5 hari | 2026-11-05 | 2026-11-09 | 5.4 | Muhammad Rifki Aulia Pratama | Data transaksi terstruktur |
-| 6.2 | 7 | Riwayat dan detail transaksi | 4 hari | 2026-11-07 | 2026-11-10 | 6.1 | Rafi Alamsyah | Riwayat transaksi |
-| 6.3 | 7-8 | Statistik omzet, transaksi, dan produk terlaris | 6 hari | 2026-11-08 | 2026-11-13 | 6.1 | Muhammad Rifki Aulia Pratama | Dashboard analitik |
-| 6.4 | 7-8 | Inventori dasar dan peringatan stok | 6 hari | 2026-11-10 | 2026-11-15 | 4.3, 6.1 | Muhammad Rifki Aulia Pratama | Monitoring stok dasar |
-| 7.1 | 8 | Integrasi customer, admin, order, transaksi, dan laporan | 5 hari | 2026-11-14 | 2026-11-18 | 5.4, 6.2, 6.3, 6.4 | Muhammad Rifki Aulia Pratama | Versi beta terintegrasi |
-| 7.2 | 8 | UI/UX polishing dan aksesibilitas dasar | 5 hari | 2026-11-14 | 2026-11-18 | 5.1, 6.2, 6.3 | Fazah dan Rafi | UI konsisten dan responsif |
-| 7.3 | 8-9 | Hardening keamanan dan optimasi performa | 4 hari | 2026-11-16 | 2026-11-19 | 7.1 | Muhammad Rifki Aulia Pratama | Build kandidat pengujian |
-| 8.1 | 9 | Penyusunan dan pelaksanaan unit/feature test | 4 hari | 2026-11-19 | 2026-11-22 | 7.1 | Rafi Alamsyah | Hasil pengujian modul |
-| 8.2 | 9 | Integration, regression, dan cross-device testing | 4 hari | 2026-11-21 | 2026-11-24 | 7.2, 7.3, 8.1 | Rafi Alamsyah | Defect log dan hasil regresi |
-| 8.3 | 9 | UAT bersama pemilik UMKM | 1 hari | 2026-11-25 | 2026-11-25 | 8.2 | Ruhmita | Berita acara dan masukan UAT |
-| 8.4 | 9-10 | Perbaikan defect dan penyesuaian UAT | 4 hari | 2026-11-25 | 2026-11-28 | 8.3 | Muhammad Rifki Aulia Pratama | Release candidate |
-| 9.1 | 9-10 | Laporan akhir, user guide, dan dokumentasi teknis | 7 hari | 2026-11-24 | 2026-11-30 | 8.1 | Seluruh tim | Dokumen akhir proyek |
-| 9.2 | 10 | Deployment, seed demo, dan persiapan presentasi | 3 hari | 2026-11-29 | 2026-12-01 | 8.4, 9.1 | Muhammad Rifki Aulia Pratama | Sistem demo siap |
-| 9.3 | 10 | Presentasi, demonstrasi, dan serah terima | 1 hari | 2026-12-02 | 2026-12-02 | 9.2 | Ruhmita | Proyek ditutup |
+| ID WBS | Minggu | Status | Aktivitas | Durasi | Mulai | Selesai | Dependensi | PIC Utama | Output |
+|---|---:|---|---|---:|---|---|---|---|---|
+| 1.1 | 1 | Selesai | Kickoff, pembagian peran, dan aturan kerja | 1 hari | 2026-09-24 | 2026-09-24 | - | Ruhmita | Struktur tim dan aturan kerja |
+| 1.2 | 1 | Selesai | Survei, wawancara, dan dokumentasi UMKM | 2 hari | 2026-09-25 | 2026-09-26 | 1.1 | Ruhmita | Catatan kebutuhan bisnis |
+| 1.3 | 1 | Selesai | Project Charter, Stakeholder Register, dan WBS | 4 hari | 2026-09-27 | 2026-09-30 | 1.2 | Ruhmita | Baseline inisiasi proyek |
+| 1.4 | 1-10 | Sedang Dikerjakan | Pengendalian jadwal, scope, risiko, dan evaluasi sprint | 10 minggu | 2026-09-24 | 2026-12-02 | 1.1 | Ruhmita | Catatan evaluasi dan pembaruan baseline |
+| 2.1 | 2 | Selesai | Analisis kebutuhan fungsional dan nonfungsional | 3 hari | 2026-10-01 | 2026-10-03 | 1.2 | Ruhmita | Spesifikasi kebutuhan |
+| 2.2 | 2 | Selesai | Pemodelan alur bisnis, use case, dan acceptance criteria | 3 hari | 2026-10-02 | 2026-10-04 | 2.1 | Ruhmita | Alur sistem dan kriteria penerimaan |
+| 2.3 | 2 | Selesai | Workspace, repository, dan inisialisasi Laravel | 2 hari | 2026-10-01 | 2026-10-02 | 1.1 | Muhammad Rifki Aulia Pratama | Starter project dapat dijalankan |
+| 2.4 | 2 | Selesai | Review dan persetujuan baseline ruang lingkup | 1 hari | 2026-10-07 | 2026-10-07 | 2.1,2.2 | Ruhmita | Baseline scope disetujui |
+| 3.1 | 2-3 | Selesai | Desain UI/UX customer mobile | 6 hari | 2026-10-05 | 2026-10-10 | 2.1 | Fazah Rizki Fatahillah | Mockup mobile |
+| 3.2 | 2-3 | Selesai | Desain UI/UX web dan panel admin | 7 hari | 2026-10-05 | 2026-10-11 | 2.1 | Rafi Alamsyah | Mockup web dan admin |
+| 3.3 | 3 | Selesai | ERD, struktur database, dan revisi skema | 4 hari | 2026-10-08 | 2026-10-11 | 2.1,2.2 | Muhammad Rifki Aulia Pratama | ERD final awal |
+| 3.4 | 3 | Selesai | Arsitektur, keamanan, dan standar pengembangan | 6 hari | 2026-10-09 | 2026-10-14 | 2.3,3.3 | Muhammad Rifki Aulia Pratama | Dokumen arsitektur dan konvensi |
+| 4.1 | 3-4 | Selesai | Migration, model, seeder, dan koneksi database | 5 hari | 2026-10-12 | 2026-10-16 | 3.3,3.4 | Muhammad Rifki Aulia Pratama | Database dapat dimigrasikan |
+| 4.2 | 4 | Selesai | Autentikasi, session, dan dashboard admin awal | 7 hari | 2026-10-15 | 2026-10-21 | 4.1 | Muhammad Rifki Aulia Pratama | Admin panel awal |
+| 4.3 | 4-5 | Selesai | Manajemen produk, kategori, dan stok produk | 8 hari | 2026-10-18 | 2026-10-25 | 4.1,4.2 | Muhammad Rifki Aulia Pratama | CRUD produk dan kategori |
+| 4.4 | 4-5 | Selesai | Katalog, detail produk, dan customer web | 8 hari | 2026-10-19 | 2026-10-26 | 3.2,4.1 | Rafi Alamsyah, Fazah Rizki Fatahillah | Customer panel web |
+| 5.1 | 5-6 | Selesai | Customer mobile dan responsivitas | 9 hari | 2026-10-22 | 2026-10-30 | 3.1,4.4 | Rafi Alamsyah, Fazah Rizki Fatahillah | Customer panel mobile |
+| 5.2 | 5-6 | Selesai | Keranjang, kalkulasi total, dan checkout | 8 hari | 2026-10-27 | 2026-11-03 | 4.4,5.1 | Rafi Alamsyah | Alur keranjang dan checkout |
+| 5.3 | 6 | Selesai | Metode pembayaran tunai, transfer, dan QRIS manual | 6 hari | 2026-10-30 | 2026-11-04 | 5.2 | Muhammad Rifki Aulia Pratama | Pilihan pembayaran dan validasi |
+| 5.4 | 6-7 | Selesai | Konfirmasi order dan pembaruan stok atomik | 6 hari | 2026-11-01 | 2026-11-06 | 4.3,5.2 | Muhammad Rifki Aulia Pratama | Pemrosesan order dan stok |
+| 6.1 | 7 | Selesai | Pencatatan transaksi dan penjualan manual | 5 hari | 2026-11-05 | 2026-11-09 | 5.4 | Muhammad Rifki Aulia Pratama | Data transaksi terstruktur |
+| 6.2 | 7 | Selesai | Riwayat dan detail transaksi | 4 hari | 2026-11-07 | 2026-11-10 | 6.1 | Rafi Alamsyah | Riwayat transaksi |
+| 6.3 | 7-8 | Selesai | Statistik omzet, transaksi, dan produk terlaris | 6 hari | 2026-11-08 | 2026-11-13 | 6.1 | Muhammad Rifki Aulia Pratama | Dashboard analitik |
+| 6.4 | 7-8 | Selesai | Inventori dasar dan peringatan stok | 6 hari | 2026-11-10 | 2026-11-15 | 4.3,6.1 | Muhammad Rifki Aulia Pratama | Monitoring stok dasar |
+| 7.1 | 8 | Selesai | Integrasi customer, admin, order, transaksi, dan laporan | 5 hari | 2026-11-14 | 2026-11-18 | 5.4,6.2,6.3,6.4 | Muhammad Rifki Aulia Pratama | Versi beta terintegrasi |
+| 7.2 | 8 | Selesai | UI/UX polishing dan aksesibilitas dasar | 5 hari | 2026-11-14 | 2026-11-18 | 5.1,6.2,6.3 | Rafi Alamsyah, Fazah Rizki Fatahillah | UI konsisten dan responsif |
+| 7.3 | 8-9 | Selesai | Hardening keamanan dan optimasi performa | 4 hari | 2026-11-16 | 2026-11-19 | 7.1 | Muhammad Rifki Aulia Pratama | Build kandidat pengujian |
+| 8.1 | 9 | Selesai | Penyusunan dan pelaksanaan unit/feature test | 4 hari | 2026-11-19 | 2026-11-22 | 7.1 | Rafi Alamsyah | Hasil pengujian modul |
+| 8.2 | 9 | Sedang Dikerjakan | Integration, regression, dan cross-device testing | 4 hari | 2026-11-21 | 2026-11-24 | 7.2,7.3,8.1 | Rafi Alamsyah | Defect log dan hasil regresi |
+| 8.3 | 9 | Sedang Dikerjakan | UAT bersama pemilik UMKM | 1 hari | 2026-11-25 | 2026-11-25 | 8.2 | Ruhmita | Berita acara dan masukan UAT |
+| 8.4 | 9-10 | Sedang Dikerjakan | Perbaikan defect dan penyesuaian UAT | 4 hari | 2026-11-25 | 2026-11-28 | 8.3 | Muhammad Rifki Aulia Pratama | Release candidate |
+| 9.1 | 9-10 | Sedang Dikerjakan | Laporan akhir, user guide, dan dokumentasi teknis | 7 hari | 2026-11-24 | 2026-11-30 | 8.1 | Seluruh tim | Dokumen akhir proyek |
+| 9.2 | 10 | Sedang Dikerjakan | Deployment, seed demo, dan persiapan presentasi | 3 hari | 2026-11-29 | 2026-12-01 | 8.4,9.1 | Muhammad Rifki Aulia Pratama | Sistem demo siap |
+| 9.3 | 10 | Sedang Dikerjakan | Presentasi, demonstrasi, dan serah terima | 1 hari | 2026-12-02 | 2026-12-02 | 9.2 | Ruhmita | Proyek ditutup |
 
 ### 2.3 Milestone
 
-| ID | Milestone | Tanggal | Kriteria Selesai |
-|---|---|---|---|
-| MS-01 | Inisiasi selesai | 2026-09-30 | Charter, stakeholder, WBS, peran, dan workspace tersedia |
-| MS-02 | Kebutuhan dibekukan | 2026-10-07 | Scope dan acceptance criteria disetujui |
-| MS-03 | Baseline desain selesai | 2026-10-14 | UI/UX, ERD, dan arsitektur siap menjadi acuan |
-| MS-04 | Versi alpha selesai | 2026-11-06 | Produk, customer panel, order, pembayaran, dan stok inti berjalan |
-| MS-05 | Versi beta terintegrasi | 2026-11-18 | Seluruh modul inti terhubung dan siap diuji |
-| MS-06 | UAT selesai | 2026-11-25 | Masukan pemilik UMKM tercatat |
-| MS-07 | Rilis dan penutupan | 2026-12-02 | Defect kritis ditutup, dokumentasi dan demo selesai |
+| ID | Milestone | Tanggal | Kriteria Selesai | Status |
+|---|---|---|---|---|
+| MS-01 | Inisiasi selesai | 2026-09-30 | Charter, stakeholder, WBS, peran, dan workspace tersedia | ✅ Tercapai |
+| MS-02 | Kebutuhan dibekukan | 2026-10-07 | Scope dan acceptance criteria disetujui | ✅ Tercapai |
+| MS-03 | Baseline desain selesai | 2026-10-14 | UI/UX, ERD, dan arsitektur siap menjadi acuan | ✅ Tercapai |
+| MS-04 | Versi alpha selesai | 2026-11-06 | Produk, customer panel, order, pembayaran, dan stok inti berjalan | ✅ Tercapai |
+| MS-05 | Versi beta terintegrasi | 2026-11-18 | Seluruh modul inti terhubung (`7.1`), UI/UX polishing (`7.2`), dan hardening (`7.3`) selesai | ✅ Tercapai |
+| MS-06 | UAT selesai | 2026-11-25 | Unit/feature test (`8.1`) selesai; regresi (`8.2`) & UAT pemilik (`8.3`) sedang dikerjakan | ▶ Sedang Dikerjakan |
+| MS-07 | Rilis dan penutupan | 2026-12-02 | Perbaikan UAT (`8.4`), laporan akhir (`9.1`), dan deployment/serah terima (`9.2`-`9.3`) sedang dikerjakan | ▶ Sedang Dikerjakan |
 
 ### 2.4 Gantt Chart
+
+![Gantt Chart Penjadwalan Proyek Ayamo (Sprint 1-10)](gantt_chart_proyek_ayamo.png)
+
+*(Skrip generator: [generate_gantt_chart.py](generate_gantt_chart.py))*
 
 ```mermaid
 gantt
