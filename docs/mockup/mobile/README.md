@@ -240,7 +240,7 @@ Tampilan layar inisialisasi aplikasi saat pertama kali disetup atau konfigurasi 
 | 🎨 **Figma**    | [Buka Desain di Figma](https://www.figma.com/design/1eqVfEPtoZpmDb4cUy9i60/Ayamo?node-id=6-2&t=FBl8vIPqf5UpQQzH-1) |
 | 📁 **Web View** | [`../web/`](../web/)                                                                                                  |
 | 📄 **Mockup**   | [`../README.md`](../README.md)                                                                                        |
-| 🏠 **Proyek**   | [`../../../../README.md`](../../../../README.md)                                                                      |
+| 🏠 **Proyek**   | [`../../../README.md`](../../../README.md)                                                                            |
 
 ---
 

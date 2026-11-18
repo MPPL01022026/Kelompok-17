@@ -15,7 +15,7 @@
 
 <br>
 
-![Status](https://img.shields.io/badge/Status-Minggu%205%20dari%2010%20Pengembangan-EA580C?style=flat-square&logo=gitbook&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Minggu%208%20dari%2010%20%E2%80%94%20Integrasi%20%26%20QA-EA580C?style=flat-square&logo=gitbook&logoColor=white)
 ![Laravel](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=flat-square&logo=laravel&logoColor=white)
 ![Livewire](https://img.shields.io/badge/Livewire-3.x%20Volt-FB70A9?style=flat-square&logo=livewire&logoColor=white)
 ![Tailwind](https://img.shields.io/badge/TailwindCSS-v4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
@@ -36,27 +36,26 @@
 
 > 🎯 **MISI:** Membangun platform digital UMKM Ayamo untuk mempercepat transaksi kasir, mengelola katalog produk secara terpusat, memantau pergerakan stok harian, dan menghasilkan laporan analitik penjualan secara real-time.
 > 🕹️ **STUDI KASUS:** UMKM Kuliner Ayamo (_Eat Chill Repeat_).
-> 🏁 **STAGE SAAT INI:** Minggu 5 dari baseline 10 minggu. Inisiasi, kebutuhan, dan desain awal telah selesai; pengembangan produk serta customer panel sedang berjalan.
+> 🏁 **STAGE SAAT INI:** Minggu 8–9 dari baseline 10 minggu (18 November 2026). Seluruh fase inisiasi–perancangan (`1.1`–`3.4`), fondasi & fitur inti (`4.1`–`6.4`), integrasi & hardening (`7.1`–`7.3`), serta unit/feature test (`8.1`) telah **Selesai** (`27` aktivitas). Aktivitas yang **Sedang Dikerjakan** saat ini (`7` aktivitas): pengendalian proyek (`1.4`), regresi & cross-device testing (`8.2`), UAT pemilik UMKM (`8.3`), perbaikan UAT (`8.4`), laporan akhir (`9.1`), serta deployment/serah terima (`9.2`–`9.3`).
 
-**Ayamo** adalah UMKM kuliner yang menyajikan berbagai olahan ayam geprek, ayam krispi, paket nasi, serta aneka minuman segar. Seiring bertambahnya variasi pesanan dan volume transaksi, diperlukan sistem kasir dan operasional yang andal, responsif, dan mudah digunakan langsung dari meja kasir maupun perangkat seluler.
+**Ayamo** adalah UMKM kuliner ayam goreng crispy dengan bumbu rahasia khas yang selalu digoreng hangat saat dipesan. Sistem ini mendukung pemesanan pelanggan tanpa login lewat Web maupun Mobile Web, sekaligus panel admin terpadu untuk kasir POS, pengelolaan stok, dan rekap penjualan harian.
 
-| Kondisi Saat Ini                                          | Kebutuhan Utama                                         | Solusi Digital Ayamo                             |
-| --------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------ |
-| Pencatatan pesanan manual & rawan antrean panjang         | Kasir cepat, kalkulasi otomatis, dan cetak/simpan struk | Modul Kasir POS Responsif berbasis Livewire Volt |
-| Pembaruan harga & menu belum tersentralisasi              | Manajemen katalog menu, varian, dan level pedas         | Panel Manajemen Produk & Kategori Dinamis        |
-| Pemantauan bahan baku (ayam, cabai, minyak) belum presisi | Peringatan stok menipis & riwayat stok masuk/keluar     | Modul Inventori & Pelacak Stok Bahan Baku        |
-| Rekap omzet harian memakan waktu                          | Laporan transaksi instan dan grafik penjualan           | Dashboard Laporan Penjualan & Performa Harian    |
+| Kondisi Saat Ini                                          | Kebutuhan Utama                                           | Solusi Digital Ayamo                                              |
+| --------------------------------------------------------- | --------------------------------------------------------- | ----------------------------------------------------------------- |
+| Pemesanan masih manual & pelanggan antre di outlet        | Pemesanan online cepat tanpa wajib membuat akun           | Storefront Web & Mobile Tanpa Login + Reservasi Stok Atomik       |
+| Pencatatan pesanan & verifikasi transfer belum seragam    | Alur status pesanan jelas & opsi transfer/QRIS terstruktur| Kasir POS Manual Multi-Item + Alur Pesanan 4-Tahap & 2 Tab Bayar  |
+| Pembaruan harga, foto, & status toko masih manual         | Kontrol katalog, stok cepat, & buka/tutup toko fleksibel  | Panel Produk (Upload/Preview Gambar + Quick Stock) & Override Toko|
+| Rekap omzet harian memakan waktu                          | Laporan transaksi instan dan export spreadsheet aman      | Dashboard Laporan UMKM + Buku Kas & Export CSV Anti Formula Injection |
 
 <details>
-<summary><b>🧺 Contoh Katalog Produk & Varian Ayamo (Klik untuk membuka)</b></summary>
+<summary><b>🧺 Katalog Default Produk Ayamo — 8 Varian Menu (Klik untuk membuka)</b></summary>
 
 <br>
 
-| Kategori | Item Produk |
-|---|---|
-| Ayam | Dada, sayap, paha atas, dan paha bawah |
-| Pelengkap | Hati, kepala, ceker, dan leher |
-| Lainnya | Bakso |
+| Kategori | Item Produk                                                        |
+| -------- | ------------------------------------------------------------------ |
+| Ayam     | Dada Ayam, Sayap Ayam, Paha Atas, Paha Bawah, Ceker Ayam, Hati Ayam, Leher Ayam |
+| Camilan  | Bakso Goreng                                                       |
 
 </details>
 
@@ -99,13 +98,13 @@ Lark Base menjadi **single source of truth** untuk jadwal, sprint, PIC, effort, 
 
 </div>
 
-| Tabel atau View Lark Base | Fungsi |
-|---|---|
-| **Master Schedule** | Aktivitas WBS, sprint, tanggal, dependensi, PIC, dan status |
-| **Resource and Effort** | Peran anggota, alokasi manday, dan beban kerja |
-| **Project Cost** | Biaya tenaga kerja, layanan, operasional, dan cadangan |
-| **Risk Register** | Probabilitas, dampak, mitigasi, pemilik, dan indikator risiko |
-| **Sprint Board** | Tampilan Kanban berdasarkan Backlog, To Do, In Progress, Review, Blocked, dan Done |
+| Tabel atau View Lark Base | Fungsi                                                                             |
+| ------------------------- | ---------------------------------------------------------------------------------- |
+| **Master Schedule**       | Aktivitas WBS, sprint, tanggal, dependensi, PIC, dan status                        |
+| **Resource and Effort**   | Peran anggota, alokasi manday, dan beban kerja                                     |
+| **Project Cost**          | Biaya tenaga kerja, layanan, operasional, dan cadangan                             |
+| **Risk Register**         | Probabilitas, dampak, mitigasi, pemilik, dan indikator risiko                      |
+| **Sprint Board**          | Tampilan Kanban berdasarkan Backlog, To Do, In Progress, Review, Blocked, dan Done |
 
 Baseline proyek berlangsung selama **10 minggu, 24 September-2 Desember 2026**. Setiap sprint berdurasi satu minggu dan ditutup dengan review. Rincian aktivitas, milestone, manday, biaya, dan risiko tersedia pada [Rencana Pengelolaan Proyek](/docs/project-management-output.md), sedangkan pembagian sprint tersedia pada [Roadmap 10 Minggu](/plan/roadmap-umkm-ayamo.md).
 
@@ -132,9 +131,9 @@ Seluruh data operasional tersebut dikelola pada [Lark Base Proyek Ayamo](https:/
 | No  | Nama Lengkap                     |     NIM     | GitHub                                                           | Peran Utama & Tanggung Jawab                                                                                                              |
 | :-: | -------------------------------- | :---------: | ---------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 |  1  | **Ruhmita**                      | `230504012` | [`@rumiyeoon`](https://github.com/rumiyeoon)                     | **Project Manager & Business Analyst**<br>Inisiasi proyek, analisis kebutuhan UMKM, pemetaan menu katalog, dan pemetaan arsitektur sistem |
-|  2  | **Fazah Fatahillah**             | `230504014` | [`@rizput1009`](https://github.com/rizput1009)                   | **Frontend & UI/UX Specialist**<br>Perancangan antarmuka, design system, komponen frontend, responsivitas, dan implementasi UI/UX          |
+|  2  | **Fazah Fatahillah**             | `230504014` | [`@rizput1009`](https://github.com/rizput1009)                   | **Frontend & UI/UX Specialist**<br>Perancangan antarmuka, design system, komponen frontend, responsivitas, dan implementasi UI/UX         |
 |  3  | **Muhammad Rifki Aulia Pratama** | `230504089` | [`@mrifkiauliap`](https://github.com/mrifkiauliap)               | **Backend Lead & DevOps**<br> Perancangan sistem, perancangan database, dan pengelolaan hosting dan keamanan                              |
-|  4  | **Rafi Alamsyah**                | `230504024` | [`@rafialamsyah720-eng`](https://github.com/rafialamsyah720-eng) | **Frontend Developer & QA Tester**<br>Implementasi frontend bersama Fazah, skenario uji, pengujian integrasi/regresi, dan validasi rilis   |
+|  4  | **Rafi Alamsyah**                | `230504024` | [`@rafialamsyah720-eng`](https://github.com/rafialamsyah720-eng) | **Frontend Developer & QA Tester**<br>Implementasi frontend bersama Fazah, skenario uji, pengujian integrasi/regresi, dan validasi rilis  |
 
 Dokumentasi teknis tidak dibebankan kepada satu peran khusus. Setiap anggota bertanggung jawab memperbarui dokumentasi untuk requirement, desain, kode, pengujian, atau proses manajemen yang dikerjakannya.
 
@@ -145,22 +144,22 @@ Dokumentasi teknis tidak dibebankan kepada satu peran khusus. Setiap anggota ber
 ## 🗺️ Peta Level Proyek (Tahapan MPPL)
 
 <div align="center">
-<img src="assets/levels.svg" alt="Peta level proyek dengan tahap pengembangan aktif pada Minggu 5 dari 10" width="100%">
+<img src="assets/levels.svg" alt="Peta level proyek: Level 1-4 dan WBS 1.1-7.1 selesai; 1.4, 7.2, 7.3, dan 8.1 sedang dikerjakan pada Minggu 8 dari 10" width="100%">
 </div>
 
-Klik pada masing-masing level untuk meninjau rincian pekerjaan:
+Klik pada masing-masing level untuk meninjau rincian pekerjaan sesuai status WBS di [Lark Base](https://zjpwcuecoylf.jp.larksuite.com/base/Zl4qbsdyeaYoJwsvF6zjJ24Cp5b?from=from_copylink):
 
 <details>
-<summary><b>⭐ LEVEL 1 — Inisiasi Proyek</b> &nbsp; ✅ Selesai</summary>
+<summary><b>⭐ LEVEL 1 — Inisiasi & Pengendalian Proyek</b> &nbsp; ▶ 1.1–1.3 Selesai · 1.4 Sedang Dikerjakan</summary>
 
 <br>
 
-- **1.1** Penentuan studi kasus UMKM Kuliner (Ayamo).
-- **1.2** Wawancara awal dan observasi kebutuhan operasional kasir & stok.
-- **1.3** Penyusunan Project Charter dan batas ruang lingkup proyek.
-- **1.4** Identifikasi pemangku kepentingan (Stakeholder Register).
+- **1.1** ✅ `Selesai` (*Ruhmita*) — Kickoff, pembagian peran, dan aturan kerja.
+- **1.2** ✅ `Selesai` (*Ruhmita*) — Survei, wawancara, dan dokumentasi UMKM.
+- **1.3** ✅ `Selesai` (*Ruhmita*) — Project Charter, Stakeholder Register, dan WBS.
+- **1.4** ▶ `Sedang Dikerjakan` (*Ruhmita*, Minggu 1–10) — Pengendalian jadwal, scope, risiko, dan evaluasi sprint.
 
-📄 Terkait: [Dokumen Perencanaan dan Project Charter](/docs/survey/Dokumen%20Peremcanaan%20Proyek%20%28%20Project%20Manajement%20%29.docx)
+📄 Terkait: [Project Charter Ayamo](/docs/Project_Charter_Ayamo%20%282%29.docx)
 
 </details>
 
@@ -169,85 +168,94 @@ Klik pada masing-masing level untuk meninjau rincian pekerjaan:
 
 <br>
 
-- **2.1** Penyusunan Work Breakdown Structure (WBS) menyeluruh.
-- **2.2** Pembagian peran, deskripsi tugas, dan estimasi waktu kerja.
-- **2.3** Penyiapan Lark Base, Git workflow, dan arsitektur repositori.
-- **2.4** Inisialisasi struktur starter kit Laravel 12, Livewire Volt, dan Tailwind CSS v4.
+- **2.3** ✅ `Selesai` (*Muhammad Rifki Aulia Pratama*) — Workspace, repository, dan inisialisasi Laravel 12 + Livewire Volt + Tailwind CSS v4.
+- **2.4** ✅ `Selesai` (*Ruhmita*) — Review dan persetujuan baseline ruang lingkup.
 
-📄 Terkait: [WBS 10 Minggu](/docs/survey/WBS-10-Minggu.md) · [Rencana Pengelolaan Proyek](/docs/project-management-output.md) · [Roadmap 10 Minggu](/plan/roadmap-umkm-ayamo.md)
+📄 Terkait: [Rencana Pengelolaan Proyek](/docs/project-management-output.md) · [Roadmap 10 Minggu](/plan/roadmap-umkm-ayamo.md)
 
 </details>
 
 <details>
-<summary><b>⭐ LEVEL 3 — Analisis Kebutuhan Sistem</b> &nbsp; ✅ Baseline Selesai</summary>
+<summary><b>⭐ LEVEL 3 — Analisis Kebutuhan Sistem</b> &nbsp; ✅ Selesai</summary>
 
 <br>
 
-- **3.1** Inventarisasi data master menu, harga jual, bahan baku, dan varian.
-- **3.2** Penyusunan kebutuhan fungsional (FR) dan non-fungsional (NFR).
-- **3.3** Perancangan use case diagram dan alur proses bisnis kasir/owner.
+- **2.1** ✅ `Selesai` (*Ruhmita*) — Analisis kebutuhan fungsional dan nonfungsional.
+- **2.2** ✅ `Selesai` (*Ruhmita*) — Pemodelan alur bisnis, use case, dan acceptance criteria.
 
 📄 Terkait: [`docs/requirements/features-and-modules.md`](/docs/requirements/features-and-modules.md)
 
 </details>
 
 <details>
-<summary><b>⭐ LEVEL 4 — Perancangan (Design & Architecture)</b> &nbsp; ✅ Baseline Selesai</summary>
+<summary><b>⭐ LEVEL 4 — Perancangan (Design & Architecture)</b> &nbsp; ✅ Selesai</summary>
 
 <br>
 
-- **4.1** Desain skema basis data relasional (ERD) dan integritas tabel.
-- **4.2** Perancangan UI/UX antarmuka kasir (POS) dan panel admin dashboard.
-- **4.3** Penetapan standarisasi penanganan error UI & komponen Blade/Volt.
-- **4.4** ✅ Perancangan mockup UI Mobile View (17 screen) — selesai di Figma.
+- **3.1** ✅ `Selesai` (*Fazah Rizki Fatahillah*) — Desain UI/UX customer mobile (17 screen mockup di Figma).
+- **3.2** ✅ `Selesai` (*Rafi Alamsyah*) — Desain UI/UX web dan panel admin.
+- **3.3** ✅ `Selesai` (*Muhammad Rifki Aulia Pratama*) — ERD, struktur database, dan revisi skema.
+- **3.4** ✅ `Selesai` (*Muhammad Rifki Aulia Pratama*) — Arsitektur, keamanan, dan standar pengembangan.
 
-📄 Terkait: [`docs/requirements/architecture.md`](/docs/requirements/architecture.md) · [`docs/requirements/standards-and-conventions.md`](/docs/requirements/standards-and-conventions.md) · [`docs/mockup/mobile/README.md`](/docs/mockup/mobile/README.md) · [🎨 Figma Mockup Mobile](https://www.figma.com/design/1eqVfEPtoZpmDb4cUy9i60/Ayamo?node-id=6-2&t=FBl8vIPqf5UpQQzH-1)
+📄 Terkait: [`docs/requirements/architecture.md`](/docs/requirements/architecture.md) · [`docs/requirements/database.md`](/docs/requirements/database.md) · [`docs/requirements/standards-and-conventions.md`](/docs/requirements/standards-and-conventions.md) · [`docs/mockup/mobile/README.md`](/docs/mockup/mobile/README.md) · [🎨 Figma Mockup Mobile](https://www.figma.com/design/1eqVfEPtoZpmDb4cUy9i60/Ayamo?node-id=6-2&t=FBl8vIPqf5UpQQzH-1)
 
 </details>
 
 <details>
-<summary><b>🔹 LEVEL 5 — Pengembangan Aplikasi (Implementation)</b> &nbsp; ▶ Sedang Berjalan</summary>
+<summary><b>⭐ LEVEL 5 — Pengembangan Aplikasi (Implementation)</b> &nbsp; ✅ Selesai (`4.1`–`7.3`)</summary>
 
 <br>
 
-- **5.1** Implementasi migrasi, model Eloquent, seeder data master.
-- **5.2** Pengembangan modul Kasir Point of Sale (POS) cepat dengan Livewire Volt.
-- **5.3** Pengembangan modul manajemen produk, kategori, dan stok bahan.
-- **5.4** Pengembangan modul laporan transaksi dan rekap pendapatan.
+- **4.1** ✅ `Selesai` (*Muhammad Rifki Aulia Pratama*) — Migration, model, seeder ([`UmkmTestingSeeder`](/app/database/seeders/UmkmTestingSeeder.php)), dan koneksi database.
+- **4.2** ✅ `Selesai` (*Muhammad Rifki Aulia Pratama*) — Autentikasi, session, dan dashboard admin awal.
+- **4.3** ✅ `Selesai` (*Muhammad Rifki Aulia Pratama*) — Manajemen produk, kategori, dan stok produk.
+- **4.4** ✅ `Selesai` (*Rafi Alamsyah, Fazah Rizki Fatahillah*) — Katalog, detail produk, dan customer web.
+- **5.1** ✅ `Selesai` (*Rafi Alamsyah, Fazah Rizki Fatahillah*) — Customer mobile dan responsivitas.
+- **5.2** ✅ `Selesai` (*Rafi Alamsyah*) — Keranjang, kalkulasi total, dan checkout.
+- **5.3** ✅ `Selesai` (*Muhammad Rifki Aulia Pratama*) — Metode pembayaran tunai, transfer multi-rekening, dan QRIS manual (dengan opsi unduh gambar QRIS).
+- **5.4** ✅ `Selesai` (*Muhammad Rifki Aulia Pratama*) — Konfirmasi order 4-tahap dan pembaruan stok atomik (`lockForUpdate`).
+- **6.1** ✅ `Selesai` (*Muhammad Rifki Aulia Pratama*) — Pencatatan transaksi dan penjualan manual (Kasir POS).
+- **6.2** ✅ `Selesai` (*Rafi Alamsyah*) — Riwayat dan detail transaksi.
+- **6.3** ✅ `Selesai` (*Muhammad Rifki Aulia Pratama*) — Statistik omzet, transaksi, dan produk terlaris.
+- **6.4** ✅ `Selesai` (*Muhammad Rifki Aulia Pratama*) — Inventori dasar dan peringatan stok.
+- **7.1** ✅ `Selesai` (*Muhammad Rifki Aulia Pratama*) — Integrasi customer, admin, order, transaksi, laporan CSV, pengaturan override toko, serta Docker production.
+- **7.2** ✅ `Selesai` (*Rafi Alamsyah, Fazah Rizki Fatahillah*) — UI/UX polishing dan aksesibilitas dasar.
+- **7.3** ✅ `Selesai` (*Muhammad Rifki Aulia Pratama*) — Hardening keamanan dan optimasi performa.
 
 </details>
 
-<details>
-<summary><b>🔒 LEVEL 6 — Pengujian Sistem (Testing & QA)</b></summary>
+<details open>
+<summary><b>🔹 LEVEL 6 — Pengujian Sistem (Testing & QA)</b> &nbsp; ▶ 8.1 Selesai · 8.2–8.4 Sedang Dikerjakan</summary>
 
 <br>
 
-- **6.1** Penyusunan test scenario (validasi input kasir, transaksi gagal/berhasil).
-- **6.2** Pengujian responsivitas UI pada perangkat desktop kasir dan tablet.
-- **6.3** Uji coba transaksi langsung dan penyesuaian masukan pengguna.
+- **8.1** ✅ `Selesai` (*Rafi Alamsyah*) — Penyusunan dan pelaksanaan unit/feature test.
+- **8.2** ▶ `Sedang Dikerjakan` (*Rafi Alamsyah*) — Integration, regression, dan cross-device testing.
+- **8.3** ▶ `Sedang Dikerjakan` (*Ruhmita*) — UAT bersama pemilik UMKM.
+- **8.4** ▶ `Sedang Dikerjakan` (*Muhammad Rifki Aulia Pratama*) — Perbaikan defect dan penyesuaian UAT.
 
 </details>
 
-<details>
-<summary><b>🔒 LEVEL 7 — Dokumentasi Akhir & Rilis</b></summary>
+<details open>
+<summary><b>🔹 LEVEL 7 — Dokumentasi Akhir & Rilis</b> &nbsp; ▶ 9.1–9.3 Sedang Dikerjakan</summary>
 
 <br>
 
-- **7.1** Finalisasi buku panduan pengguna (User Guide).
-- **7.2** Penyusunan laporan akhir Manajemen Proyek Perangkat Lunak (MPPL).
-- **7.3** Presentasi demonstrasi sistem dan serah terima hasil proyek.
+- **9.1** ▶ `Sedang Dikerjakan` (*Seluruh tim*) — Laporan akhir, user guide, dan dokumentasi teknis.
+- **9.2** ▶ `Sedang Dikerjakan` (*Muhammad Rifki Aulia Pratama*) — Deployment, seed demo, dan persiapan presentasi.
+- **9.3** ▶ `Sedang Dikerjakan` (*Ruhmita*) — Presentasi, demonstrasi, dan serah terima.
 
 </details>
 
 ### 📊 Ringkasan Progres Proyek
 
-- [x] **Level 1 — Inisiasi:** Ide proyek, latar belakang UMKM, Project Charter, Stakeholder Register
-- [x] **Level 2 — Perencanaan:** Struktur WBS, setup Git dan Lark Base, serta inisialisasi TAILL Stack
-- [x] **Level 3 — Analisis Kebutuhan:** Spesifikasi modul, inventarisasi menu & alur kasir
-- [x] **Level 4 — Perancangan:** Baseline database, mockup UI, arsitektur, dan konvensi teknis
-- [ ] **Level 5 — Pengembangan:** Implementasi fitur POS, manajemen inventori, dan analitik
-- [ ] **Level 6 — Pengujian:** Testing skenario kasir, perbaikan bug, validasi owner
-- [ ] **Level 7 — Dokumentasi & Rilis:** Laporan akhir MPPL, video demo, dan penutupan proyek
+- [x] **Level 1 — Inisiasi (`1.1`–`1.3`):** Selesai (*Ruhmita*); pengendalian jadwal/scope/risiko (`1.4`) terus berjalan selama 10 minggu (`Sedang Dikerjakan`)
+- [x] **Level 2 — Perencanaan & Setup (`2.3`–`2.4`):** Workspace, repository, Laravel starter, dan persetujuan baseline scope (`Selesai`)
+- [x] **Level 3 — Analisis Kebutuhan (`2.1`–`2.2`):** Analisis FR/NFR, alur bisnis, use case, dan acceptance criteria (`Selesai`)
+- [x] **Level 4 — Perancangan (`3.1`–`3.4`):** UI/UX mobile & web/admin, ERD final, arsitektur, dan standar pengembangan (`Selesai`)
+- [x] **Level 5 — Pengembangan (`4.1`–`7.3`):** Seluruh modul inti, UI/UX polishing, & hardening keamanan/performa (`Selesai`)
+- [ ] **Level 6 — Pengujian (`8.1`–`8.4`):** `8.1` unit/feature test `Selesai`; `8.2` regresi lintas perangkat, `8.3` UAT pemilik UMKM, & `8.4` perbaikan defect `Sedang Dikerjakan`
+- [ ] **Level 7 — Dokumentasi & Rilis (`9.1`–`9.3`):** Laporan akhir, user guide, deployment demo, dan serah terima `Sedang Dikerjakan`
 
 <img src="assets/divider.svg" width="100%" alt="Divider">
 
@@ -255,54 +263,59 @@ Klik pada masing-masing level untuk meninjau rincian pekerjaan:
 
 ## 🎒 Dokumen & Spesifikasi Proyek
 
-Seluruh dokumentasi teknis dan manajemen proyek disusun secara modular dan terstruktur:
+Seluruh dokumentasi teknis, manajemen proyek, dan log eksperimen disusun secara terstruktur:
 
-| No  | Dokumen                       | Lokasi Berkas                                                             | Fokus Pembahasan                                | Status |
-| :-: | ----------------------------- | ------------------------------------------------------------------------- | ----------------------------------------------- | :----: |
-|  1  | **Rencana Pengelolaan Proyek** | [`docs/project-management-output.md`](/docs/project-management-output.md) | Jadwal, WBS, resource, manday, biaya, dan risiko |   ✅   |
-|  2  | **Arsitektur Sistem**         | [`docs/requirements/architecture.md`](/docs/requirements/architecture.md) | Arsitektur, relasi data, dan alur komponen      |   ✅   |
-|  3  | **Standar & Konvensi**        | [`docs/requirements/standards-and-conventions.md`](/docs/requirements/standards-and-conventions.md) | Pedoman error handling, penamaan, dan validasi |   ✅   |
-|  4  | **Spesifikasi Modul & Fitur** | [`docs/requirements/features-and-modules.md`](/docs/requirements/features-and-modules.md) | Rincian POS, inventori, laporan, dan user |   ✅   |
-|  5  | **Roadmap Pengembangan**      | [`plan/roadmap-umkm-ayamo.md`](/plan/roadmap-umkm-ayamo.md)               | Roadmap 10 sprint dan deliverable               |   ✅   |
-|  6  | **WBS Revisi 10 Minggu** | [`docs/survey/WBS-10-Minggu.md`](/docs/survey/WBS-10-Minggu.md) | Struktur pekerjaan dan pemetaan sepuluh minggu |   ✅   |
-|  7  | **Mockup UI Mobile**          | [`docs/mockup/mobile/README.md`](/docs/mockup/mobile/README.md)           | 17 screen mockup UI mobile view (Figma)         |   ✅   |
-|  8  | **Dokumentasi Mobile View**   | [`docs/mobile/README.md`](/docs/mobile/README.md)                         | Panduan implementasi & spesifikasi teknis mobile|   ✅   |
-|  9  | **Project Control Lark Base** | [Buka Lark Base Ayamo](https://zjpwcuecoylf.jp.larksuite.com/base/Zl4qbsdyeaYoJwsvF6zjJ24Cp5b?from=from_copylink) | Jadwal, PIC, effort, biaya, dan risk register |   🔄   |
+| No  | Dokumen                        | Lokasi Berkas                                                                                                     | Fokus Pembahasan                                            | Status |
+| :-: | ------------------------------ | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | :----: |
+|  1  | **Rencana Pengelolaan Proyek** | [`docs/project-management-output.md`](/docs/project-management-output.md)                                         | Jadwal, WBS, resource, manday, biaya, dan risiko            |   ✅   |
+|  2  | **Indeks Dokumentasi Teknis**  | [`docs/requirements/README.md`](/docs/requirements/README.md)                                                     | Indeks dokumen spesifikasi sistem & alur pembaruan          |   ✅   |
+|  3  | **Arsitektur Sistem & Docker** | [`docs/requirements/architecture.md`](/docs/requirements/architecture.md)                                         | Arsitektur Laravel 12, middleware, model, & setup Docker    |   ✅   |
+|  4  | **Skema Basis Data**           | [`docs/requirements/database.md`](/docs/requirements/database.md)                                                 | ERD, skema migrasi aktif, reservasi stok, & `UmkmTestingSeeder`|   ✅   |
+|  5  | **Standar & Konvensi**         | [`docs/requirements/standards-and-conventions.md`](/docs/requirements/standards-and-conventions.md)               | Konvensi modal/toast, SVG tanpa emoji, Tailwind CSS v4, & kode|   ✅   |
+|  6  | **Spesifikasi Modul & Fitur**  | [`docs/requirements/features-and-modules.md`](/docs/requirements/features-and-modules.md)                         | Rincian storefront, POS 4-tahap, pembayaran, stok, & laporan|   ✅   |
+|  7  | **Roadmap Pengembangan**       | [`plan/roadmap-umkm-ayamo.md`](/plan/roadmap-umkm-ayamo.md)                                                       | Roadmap 10 sprint, milestone, & status pelaksanaan          |   ✅   |
+|  8  | **Panduan Aset Mockup**        | [`docs/mockup/README.md`](/docs/mockup/README.md) · [`docs/mockup/mobile/README.md`](/docs/mockup/mobile/README.md)| 17 screen mockup mobile view (Figma) & aset web view        |   ✅   |
+|  9  | **Log Eksperimen & Debugging** | [`pembelajaran.md`](/pembelajaran.md)                                                                             | Catatan root cause bug, arsitektur UI, & verifikasi teknis  |   🔄   |
+| 10  | **Project Charter**            | [`docs/Project_Charter_Ayamo (2).docx`](/docs/Project_Charter_Ayamo%20%282%29.docx)                                 | Dokumen charter awal proyek MPPL                            |   ✅   |
+| 11  | **Project Control Lark Base**  | [Buka Lark Base Ayamo](https://zjpwcuecoylf.jp.larksuite.com/base/Zl4qbsdyeaYoJwsvF6zjJ24Cp5b?from=from_copylink) | Jadwal, PIC, effort, biaya, dan risk register               |   🔄   |
 
 <details>
 <summary><b>📁 Struktur Direktori Repositori</b></summary>
 
 ```text
-ayamo/
-├── app/                      # Direktori sumber aplikasi Laravel
-│   ├── app/                  # Model, Controller, Provider, Livewire components
-│   ├── database/             # Migrations, Seeders, Factories
-│   ├── resources/            # Views (Blade, Volt, Flux), CSS, JS
-│   ├── routes/               # Routing web & auth
-│   └── vite.config.js        # Konfigurasi bundler frontend
-├── assets/                   # Aset visual & dokumentasi grafis
-│   ├── banner.svg            # Banner vektor repositori
-│   ├── divider.svg           # Pembatas dekoratif
-│   ├── footer.svg            # Footer vektor
-│   ├── levels.svg            # Roadmap level visual
-│   ├── team.svg              # Header tim pengembang
-│   ├── logo.webp             # Logo resmi Ayamo
-│   └── anggota/             # Foto profil anggota tim
-├── docs/                     # Dokumentasi sistem & laporan MPPL
-│   ├── mobile/              # 📱 Dokumentasi Mobile View (implementasi & spesifikasi)
-│   │   └── README.md        # Panduan teknis & design tokens mobile
-│   ├── mockup/              # Aset & dokumentasi desain UI/UX
-│   │   ├── mobile/          # 📸 17 screenshot mockup mobile (Figma)
-│   │   │   └── README.md    # Dokumentasi lengkap setiap screen
-│   │   └── web/             # Aset mockup desktop/web view
-│   ├── requirements/        # Spesifikasi kebutuhan sistem
-│   │   ├── architecture.md  # Arsitektur sistem & alur data
-│   │   ├── features-and-modules.md  # Spesifikasi modul fitur
-│   │   └── standards-and-conventions.md # Pedoman koding & validasi
-│   └── survey/              # Dokumen survei, Charter, WBS, dan Stakeholder
-├── plan/                     # Rencana kerja & sprint backlog
-│   └── roadmap-umkm-ayamo.md # Roadmap implementasi 10 minggu
-└── README.md                 # Dokumentasi utama repositori
+Kelompok-17/
+├── Dockerfile                      # Multi-stage Docker build produksi (Composer + Vite + PHP 8.4 + Nginx)
+├── docker-compose.yml              # Orkestrasi app, mysql:8.4 (healthcheck), & profil tunnel cloudflared
+├── .dockerignore                   # Eksklusi vendor, node_modules, .env, & berkas sementara
+├── .env.example                    # Template environment produksi Docker Compose
+├── pembelajaran.md                 # Log eksperimen, debugging, & keputusan teknis
+├── README.md                       # Dokumentasi utama repositori
+├── docker/                         # Konfigurasi pendukung container
+│   ├── Dockerfile                  # Salinan Dockerfile konfigurasi produksi
+│   ├── entrypoint.sh               # Auto APP_KEY fallback, wait MySQL, storage:link, migrate, optimize
+│   ├── nginx/default.conf          # Konfigurasi web server Nginx (port 8000)
+│   └── php/php-prod.ini            # Tuning PHP-FPM & OPcache produksi
+├── app/                            # Direktori aplikasi Laravel 12
+│   ├── .env.example                # Template environment pengembangan lokal
+│   ├── app/
+│   │   ├── Http/
+│   │   │   ├── Controllers/        # Modular Admin/* & Customer/* controllers
+│   │   │   └── Middleware/         # AdminSession & SecurityHeaders
+│   │   └── Models/                 # Product, Order, Transaction, Settings, LoginAttempt, User
+│   ├── database/
+│   │   ├── migrations/             # Skema tabel, stock_reserved, & settings.value TEXT
+│   │   └── seeders/                # DatabaseSeeder & UmkmTestingSeeder
+│   ├── public/                     # Aset publik, multi-res favicon.ico, img/logo.webp
+│   ├── resources/                  # Blade views, components (<x-modal-*>), CSS & JS
+│   └── routes/                     # web.php (Web, Mobile, Admin)
+├── assets/                         # Aset visual dokumentasi (banner, divider, footer, levels.svg)
+├── docs/                           # Dokumentasi sistem, mockup Figma, & Project Charter
+│   ├── mockup/                     # Mockup UI/UX mobile/ & web/
+│   ├── requirements/               # architecture.md, database.md, features-and-modules.md, standards
+│   ├── survey/                     # Dokumentasi foto survei UMKM
+│   └── project-management-output.md
+└── plan/                           # Rencana kerja sprint backlog
+    └── roadmap-umkm-ayamo.md
 ```
 
 </details>
@@ -367,23 +380,23 @@ Untuk menjaga kebersihan riwayat git dan mencegah konflik kode, seluruh anggota 
 
 ## ⚙️ Panduan Instalasi & Menjalankan Aplikasi
 
-### 1. Prasyarat Sistem
+### A. Menjalankan Secara Lokal (Development)
+
+#### 1. Prasyarat Sistem
 
 - **PHP** `>= 8.2` (Sangat disarankan **PHP 8.4+**)
 - **Composer** `>= 2.7`
 - **Node.js** `>= 20.x` & **NPM**
-- **MySQL** / **MariaDB** Server
+- **MySQL** / **MariaDB** Server (atau SQLite untuk uji lokal)
 
-### 2. Kloning Repositori & Persiapan Environment
-
-Masuk ke direktori aplikasi `app/`:
+#### 2. Persiapan Environment (`app/`)
 
 ```bash
 cd app
 cp .env.example .env
 ```
 
-Sesuaikan kredensial basis data pada file `.env`:
+Sesuaikan kredensial basis data & panel admin pada `app/.env`:
 
 ```env
 APP_NAME="Ayamo - Eat Chill Repeat"
@@ -397,43 +410,51 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-### 3. Instalasi Dependensi & Database
+#### 3. Instalasi Dependensi, Migrasi, & Seeder Pengujian
 
 ```bash
 composer install
 npm install
 php artisan key:generate
 php artisan migrate
+
+# Opsional: isi data testing UMKM lengkap (kecuali tabel products)
+php artisan db:seed --class=UmkmTestingSeeder
 ```
 
-### 4. Menjalankan Server Pengembangan
+#### 4. Menjalankan Server Pengembangan
 
-Jalankan service secara bersamaan (Server Laravel, Queue, Pail log, dan Vite):
+Jalankan seluruh service lokal (Server Laravel, Queue, Pail log, dan Vite):
 
 ```bash
 composer run dev
 ```
 
-Akses aplikasi melalui peramban: `http://localhost:8000` (atau port yang tertera pada konsol).
+Akses melalui browser:
+- **Web Storefront**: `http://127.0.0.1:8000`
+- **Mobile Web View**: `http://127.0.0.1:8000/mobile`
+- **Admin Dashboard**: `http://127.0.0.1:8000/admin`
 
-<img src="assets/divider.svg" width="100%" alt="Divider">
+---
 
-<a id="standar-dan-konvensi"></a>
+### B. Menjalankan dengan Docker Compose (Production-Ready)
 
-## ⚖️ Konvensi Koding & Penanganan Error
+Konfigurasi kontainer produksi berada di root repositori ([`Dockerfile`](/Dockerfile), [`docker-compose.yml`](/docker-compose.yml), [`.env.example`](/.env.example)) yang memaketkan PHP 8.4-FPM, Nginx (port `8000`), asset Vite terkompilasi, serta `mysql:8.4`.
 
-Seluruh pengembangan fitur wajib mematuhi panduan pada [Standar & Konvensi](/docs/standards-and-conventions.md):
+1. Salin file `.env.example` di **root repositori** dan sesuaikan `APP_KEY`, password MySQL, dan `ADMIN_PASSWORD_HASH`:
+   ```bash
+   cp .env.example .env
+   ```
+2. Bangun image dan jalankan service di latar belakang:
+   ```bash
+   docker compose up -d --build
+   ```
+3. (Opsional) Jika menggunakan Cloudflare Tunnel dengan variabel `CLOUDFLARED_TUNNEL_TOKEN`:
+   ```bash
+   docker compose --profile tunnel up -d
+   ```
 
-1. **Penanganan Error Validasi**:
-   - Untuk input form spesifik: Wajib memakai `<x-input-error :messages="$errors->get('field')" />` tepat di bawah field input terkait.
-   - Untuk error global/transaksional non-field: Wajib memakai `<x-modal-notification>` yang dipicu oleh session flash message (`session()->flash('error', '...')`).
-2. **Penamaan Berkas**:
-   - View Blade & Livewire Volt: `kebab-case` (contoh: `order-cart-panel.blade.php`, `menu-item-card.blade.php`).
-   - Class PHP & Model: `PascalCase` (contoh: `OrderController.php`, `MenuItem.php`).
-3. **Integritas Skema**:
-   - Dilarang membuat skema tanpa relasi atau logika yang tidak jelas (_No AI Slop_). Seluruh migrasi dan seeder harus terstruktur sesuai kebutuhan bisnis nyata UMKM Ayamo.
-
-<br>
+Aplikasi otomatis menjalankan `storage:link`, migrasi (`AUTORUN_MIGRATIONS=true`), dan caching Laravel saat container menyala, serta menyediakan endpoint healthcheck `/up`.
 
 <div align="center">
 
